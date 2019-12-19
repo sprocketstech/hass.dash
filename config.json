@@ -1,8 +1,9 @@
 {
   "name": "Hass.Dash",
-  "version": "1",
+  "version": "4",
   "slug": "hass_dash",
-  "description": "My first real add-on!",
+  "description": "Dashboard creation for home assistant",
+  "ingress": true,
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "before",
   "boot": "auto",

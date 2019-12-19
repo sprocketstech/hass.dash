@@ -1,16 +1,16 @@
-FROM %%BASE_IMAGE%%
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
 ENV LANG C.UTF-8
 
-RUN apk add --no-cache nodejs-current yarn && \
+RUN apk add --no-cache nodejs-current yarn git && \
 yarn global add npm && \
+yarn global add bower && \
 yarn cache clean && \
-apk del yarn && \
-npm set unsafe-perm true && \
-npm install install express request
+apk del yarn
 
 # Expose tcp/8081
-EXPOSE 8088
+EXPOSE 8099
 
 # Copy data for add-on
 # Bundle app source

@@ -1,0 +1,66 @@
+<div class="col-lg-12" ng-controller="EditorCtrl">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="nav-link dropdown-toggle text-dark mr-auto" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{selectedBoard.name}}</a>
+        <div class="dropdown-menu">
+            <a ng-repeat="board in boards" class="dropdown-item" href="#" ng-click="loadBoard(board.name)">{{board.name}}</a>
+        </div>
+        <button class="btn btn-flat" type="button" ng-click="addBoard()"><i class="fas fa-plus"></i> Add Board</button>
+        <button class="btn btn-flat" type="button" ng-click="saveBoard()"><i class="fas fa-lg fa-save"></i></button>
+    </nav>
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="form-inline">
+                <div class="form-group mr-3">
+                    <label class="mr-3">Name: </label>
+                    <input class="form-control" type="text" ng-model="selectedBoard.name">
+                </div>
+
+                <div class="form-group mr-3">
+                    <label class="mr-3">Device: </label>
+                    <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{selectedBoard.device}}</a>
+                    <div class="dropdown-menu">
+                        <a ng-repeat="device in deviceTypes" class="dropdown-item" href="#" ng-click="selectedBoard.device = device.name">{{device.name}}</a>
+                    </div>
+                </div>
+
+                <div class="form-group mr-3">
+                    <label class="mr-3">Size: </label>
+                    <input class="form-control" type="text" ng-model="selectedBoard.width" ng-enabled="selectedBoard.customizable">
+                    <label class="mr-3"> X </label>
+                    <input class="form-control" type="text" ng-model="selectedBoard.height">
+                </div>
+
+
+                <div class="form-group mr-3">
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" name="cbportrait" class="custom-control-input" ng-model="selectedBoard.portrait">
+                        <span class="custom-control-label" for="cbportrait">Portrait</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-secondary" type="button" ng-click="addPage()"><i class="fas fa-plus"></i> Add Page</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center" ng-repeat="page in selectedBoard.pages">
+        <div class="card border-primary mb-3">
+            <div class="card-header">
+                <span>Page {{$index + 1}}</span>
+                <div class="float-right">
+                    <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus"></i> Add Widget</a>
+                    <div class="dropdown-menu">
+                        <a ng-repeat="widgetType in availableWidgets" class="dropdown-item" href="#">{{widgetType.name}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <dashboard-canvas ng-style="canvasStyle()"></dashboard-canvas>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

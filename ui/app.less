@@ -4,7 +4,13 @@
 @fa-font-path: "bower_components/font-awesome/fonts";
 
 /* Component LESS */
+@import "partial/editor/editor.less";
+@import "directive/dashboardCanvas/dashboardCanvas.less";
 /* Add Component LESS Above */
+
+.dropdown-toggle::after {
+    margin-left: 0.355em;
+}
 
 /* Required for Angular UI Bootstrap */
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

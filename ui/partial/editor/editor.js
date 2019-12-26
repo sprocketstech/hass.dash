@@ -1,4 +1,4 @@
-angular.module('hassdash').controller('EditorCtrl',function($scope, _, dashboardService, deviceTypeService, widgetService){
+angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, dashboardService, deviceTypeService, widgetService) {
     $scope.deviceWidth = 1920;
     $scope.deviceHeight = 1080;
     $scope.deviceTopMargin = 16;
@@ -38,6 +38,27 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, dashboard
         });
     };
 
+    $scope.newWidget = function(page, widgetType) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'newWidget.html',
+            controller: 'NewWidgetCtrl',
+            controllerAs: '$ctrl',
+            size: 'lg',
+            resolve: {
+              items: function () {
+                return {
+                    page: page,
+                    type: widgetType
+                };
+              }
+            }
+          });
+
+          modalInstance.result.then(function (widgetConfig) {
+            page.widgets.push(widgetConfig);
+          });
+    };
+
 
     $scope.canvasStyle = function() {
         if ($scope.selectedBoard.portrait) {
@@ -69,3 +90,29 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, dashboard
     });
 
 });
+
+angular.module('hassdash').controller('NewWidgetCtrl', function ($uibModalInstance, items, entityService) {
+    var $ctrl = this;
+    $ctrl.type = items.type;
+    $ctrl.model = {
+        name: $ctrl.type.name,
+        plugin: $ctrl.type.plugin,
+        size: $ctrl.type.availableSizes[0].value,
+        show_label: $ctrl.type.show_label
+    };
+
+    entityService.get($ctrl.type.entity_filter).then(function(results) {
+        $ctrl.entities = results;
+        if (!$ctrl.model.entity) {
+            $ctrl.model.entity = $ctrl.entities[0].entity_id;
+        }
+    });
+
+    $ctrl.ok = function () {
+      $uibModalInstance.close($ctrl.model);
+    };
+
+    $ctrl.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
+  });

@@ -43,7 +43,7 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
             templateUrl: 'newWidget.html',
             controller: 'NewWidgetCtrl',
             controllerAs: '$ctrl',
-            size: 'lg',
+            size: 'xl',
             resolve: {
               items: function () {
                 return {
@@ -91,12 +91,13 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
 
 });
 
-angular.module('hassdash').controller('NewWidgetCtrl', function ($uibModalInstance, items, entityService) {
+angular.module('hassdash').controller('NewWidgetCtrl', function ($scope, $uibModalInstance, items, entityService) {
     var $ctrl = this;
     $ctrl.type = items.type;
     $ctrl.model = {
         name: $ctrl.type.name,
-        plugin: $ctrl.type.plugin,
+        plugin_module: $ctrl.type.module,
+        plugin_name: $ctrl.type.name,
         size: $ctrl.type.availableSizes[0].value,
         show_label: $ctrl.type.show_label
     };
@@ -108,6 +109,10 @@ angular.module('hassdash').controller('NewWidgetCtrl', function ($uibModalInstan
         }
     });
 
+    $ctrl.entityValue = function() {
+        return entityService.getValue($ctrl.model.entity);
+    };
+
     $ctrl.ok = function () {
       $uibModalInstance.close($ctrl.model);
     };
@@ -115,4 +120,10 @@ angular.module('hassdash').controller('NewWidgetCtrl', function ($uibModalInstan
     $ctrl.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    $scope.$watch(function() {
+        return $ctrl.model;
+    }, function() {
+        $scope.$broadcast('widgetConfigChanged', $ctrl.model);
+    }, true);
   });

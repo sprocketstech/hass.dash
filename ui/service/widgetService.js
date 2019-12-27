@@ -1,61 +1,121 @@
-angular.module('hassdash').factory('widgetService', function($q) {
+angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyLoad) {
 
+    var templateCache = {}
     var widgetService = {};
 
-    widgetService.getAll = function() {
+    widgetService.load = function(urls) {
         var deferred = $q.defer();
-        deferred.resolve([
-            {
-                name: "Clock",
-                plugin: 'sprockets.widget.clock',
-                show_label: false,
-                entity_filter: [
-                    'sensor.date_time_iso'
-                ],
-                availableSizes: [
-                    {name: "Small", value: {width: 1, height: 1}},
-                    {name: "Medium", value: {width: 1, height: 2}},
-                    {name: "Large", value: {width: 1, height: 3}}
-                ],
-                options: [
-                    {
-                        name: "Time Format",
-                        key: "time_format",
-                        type: "select",
-                        values: [
-                                {display: "8:30 PM", value: "h:mm A"},
-                                {display: "8:30:33 PM", value: "h:mm:ss A"},
-                                {display: "20:30", value: "HH:mm"},
-                                {display: "20:30:33", value: "HH:mm:ss"}
+        var toLoad = [];
+        var htmlUrl = "";
+        //TODO: At some point the URL should be configurable
+        angular.forEach(urls, function(url) {
+            if (url.type == "html") {
+                htmlUrl = "/widgets/" + url.url;
+            } else {
+                toLoad.push("/widgets/" + url.url);
+            }
 
-                        ]
-                    },
-                    {
-                        name: "Show Date?",
-                        key: "show_date",
-                        type: "boolean"
-                    },
-                    {
-                        name: "Date Format",
-                        key: "date_format",
-                        type: "select",
-                        values: [
-                                {display: "Friday, August 2nd 1985", value: "dddd, MMMM Do YYYY"},
-                                {display: "8/2/1985", value: "M/D/YYYY"},
-                                {display: "8/2/85", value: "M/D/YY"},
-                                {display: "August 2, 1985", value: "MMMM D, YYYY"},
-                                {display: "Aug 2, 1985", value: "MMM D, YYYY"}
-
-                        ]
-                    },
-                ]
-            },
-            { name: "Weather Conditions", plugin: 'sprockets.widget.weather_conditions' },
-            { name: "Weather Forecast", plugin: 'sprockets.widget.weather_forecast' },
-            { name: "Button", plugin: 'sprockets.widget.button' }
-        ]);
+        });
+        //load the dependencies
+        $ocLazyLoad.load(toLoad).then(function(deps) {
+            //dependencies loaded succesfully, load the html
+            if (templateCache.hasOwnProperty(htmlUrl)) {
+                deferred.resolve(templateCache[htmlUrl]);
+            } else {
+                $http({
+                    method: 'GET',
+                    url: htmlUrl
+                }).success(function(response){
+                    //cache the result
+                    templateCache[htmlUrl] = response;
+                    deferred.resolve(response);
+                }).error(function(error){
+                    deferred.reject({message: error});
+                });
+            }
+        }).catch(function (err) {
+            deferred.reject(err);
+        });
 
         return deferred.promise;
     };
+
+    widgetService.getAll = function() {
+        var deferred = $q.defer();
+        deferred.resolve(widgets);
+
+        return deferred.promise;
+    };
+
+    var widgets = [
+        {
+            name: "Clock",
+            module: 'hassdash.widget.clock',
+            controller: 'clockController',
+            show_label: false,
+            entity_filter: [
+                'sensor.date_time_iso'
+            ],
+            availableSizes: [
+                {name: "Small", value: {width: 2, height: 1}},
+                {name: "Medium", value: {width: 3, height: 1}},
+                {name: "Large", value: {width: 4, height: 1}}
+            ],
+            options: [
+                {
+                    name: "Time Format",
+                    key: "time_format",
+                    type: "select",
+                    values: [
+                            {display: "8:30 PM", value: "h:mm A"},
+                            {display: "8:30:33 PM", value: "h:mm:ss A"},
+                            {display: "20:30", value: "HH:mm"},
+                            {display: "20:30:33", value: "HH:mm:ss"}
+
+                    ]
+                },
+
+            ],
+            templateUrl: 'clock/clock.html',
+            templateCss: ['clock/clock.css'],
+            templateJs: ['clock/clock.js']
+        },
+        {
+            name: "Date",
+            module: 'hassdash.widget.date',
+            controller: 'dateController',
+            show_label: false,
+            entity_filter: [
+                'sensor.date_time_iso'
+            ],
+            availableSizes: [
+                {name: "Small", value: {width: 2, height: 1}},
+                {name: "Medium", value: {width: 3, height: 1}},
+                {name: "Large", value: {width: 4, height: 1}}
+            ],
+            options: [
+                {
+                    name: "Date Format",
+                    key: "date_format",
+                    type: "select",
+                    values: [
+                            {display: "Friday, August 2nd 1985", value: "dddd, MMMM Do YYYY"},
+                            {display: "8/2/1985", value: "M/D/YYYY"},
+                            {display: "8/2/85", value: "M/D/YY"},
+                            {display: "August 2, 1985", value: "MMMM D, YYYY"},
+                            {display: "Aug 2, 1985", value: "MMM D, YYYY"}
+
+                    ]
+                }
+            ],
+            templateUrl: 'date/date.html',
+            templateCss: ['date/date.css'],
+            templateJs: ['date/date.js']
+        },
+        { name: "Weather Conditions", plugin: 'sprockets.widget.weather_conditions' },
+        { name: "Weather Forecast", plugin: 'sprockets.widget.weather_forecast' },
+        { name: "Button", plugin: 'sprockets.widget.button' }
+    ];
+
     return widgetService;
 });

@@ -30,5 +30,12 @@ angular.module('hassdash').factory('entityService',function($q, _) {
         deferred.resolve(filtered);
         return deferred.promise;
     }
+
+    entityService.getValue = function(entity_id) {
+        var ent = _.filter(entities, function(e) { return e.entity_id === entity_id; });
+        return ent[0].state;
+    }
+
+
     return entityService;
 });

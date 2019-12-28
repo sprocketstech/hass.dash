@@ -1,4 +1,4 @@
-angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyLoad) {
+angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyLoad, _) {
 
     var templateCache = {}
     var widgetService = {};
@@ -43,8 +43,14 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
     widgetService.getAll = function() {
         var deferred = $q.defer();
         deferred.resolve(widgets);
-
         return deferred.promise;
+    };
+
+    widgetService.get = function(module, name) {
+        var widget = _.filter(widgets, function(w) {
+            return w.name === name && w.module === module;
+        });
+        return widget[0];
     };
 
     var widgets = [
@@ -57,9 +63,9 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
                 'sensor.date_time_iso'
             ],
             availableSizes: [
-                {name: "Small", value: {width: 2, height: 1}},
-                {name: "Medium", value: {width: 3, height: 1}},
-                {name: "Large", value: {width: 4, height: 1}}
+                {name: "Small", value: {x: 2, y: 1}},
+                {name: "Medium", value: {x: 3, y: 1}},
+                {name: "Large", value: {x: 4, y: 1}}
             ],
             options: [
                 {
@@ -89,9 +95,9 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
                 'sensor.date_time_iso'
             ],
             availableSizes: [
-                {name: "Small", value: {width: 2, height: 1}},
-                {name: "Medium", value: {width: 3, height: 1}},
-                {name: "Large", value: {width: 4, height: 1}}
+                {name: "Small", value: {x: 2, y: 1}},
+                {name: "Medium", value: {x: 3, y: 1}},
+                {name: "Large", value: {x: 4, y: 1}}
             ],
             options: [
                 {

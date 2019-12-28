@@ -24,6 +24,7 @@
     "font-awesome": "*",
     "popper.js": "*",
     "oclazyload ": "*",
-    "ngFitText": "*"
+    "ngFitText": "*",
+    "angular-gridster": "*"
   }
 }

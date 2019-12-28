@@ -1,40 +1,91 @@
-angular.module('hassdash').directive('dashboardCanvas', function($timeout) {
+angular.module('hassdash').directive('dashboardCanvas', function($timeout, widgetService, _) {
     var direc = {
         restrict: 'E',
         replace: true,
         scope: {
-
+            items: '=',
+            width: '=',
+            height: '='
         },
         templateUrl: 'directive/dashboardCanvas/dashboardCanvas.html',
         gridSize: 48,
         link: function(scope, element, attrs, fn) {
-            scope.grid = [];
-            element.ready(function () {
-                var height, width;
-                $timeout(function () {
-                  height  = element.height();
-                  width  = element.width();
-                  direc.layout(scope, width, height);
-                });
-            });
-            element.resize(function(e) {
-                height  = $(e.target).height();
-                width  = $(e.target).width();
-                scope.$apply(direc.layout(scope, width, height));
-            });
-        },
-        layout: function(scope, width, height) {
-            var columns = Math.floor(width / direc.gridSize);
-            var rows = Math.floor(height / direc.gridSize);
-            var lmargin = (width % direc.gridSize)/2;
-            var tmargin = (height % direc.gridSize)/2;
-            var totalElements = columns * rows;
-            scope.rows = rows;
-            scope.columns = columns;
-            scope.margins = {
-                "margin-left": lmargin + "px",
-                "margin-top": tmargin + "px"
+            scope.customItemMap = {
+                sizeX: 'item.size.x',
+                sizeY: 'item.size.y',
+                row: 'item.position.row',
+                col: 'item.position.col'
             };
+
+            scope.gridsterOpts = {
+                isMobile: false,
+                mobileModeEnabled: false,
+                columns: Math.floor(scope.width / direc.gridSize), // the width of the grid, in columns
+                pushing: false,
+                floating: false,
+                swapping: true,
+                width: scope.width,
+                colWidth: direc.gridSize,
+                rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
+                margins: [0, 0], // the pixel distance between each widget
+                outerMargin: false, // whether margins apply to outer edges of the grid
+                sparse: false, // "true" can increase performance of dragging and resizing for big grid (e.g. 20x50)
+                minColumns:  Math.floor(scope.width / direc.gridSize),
+                minRows:   Math.floor(scope.height / direc.gridSize),
+                maxRows:  Math.floor(scope.height / direc.gridSize),
+                defaultSizeX: 1, // the default width of a gridster item, if not specifed
+                defaultSizeY: 1, // the default height of a gridster item, if not specified
+                minSizeX: 1, // minimum column width of an item
+                maxSizeX: null, // maximum column width of an item
+                minSizeY: 1, // minumum row height of an item
+                maxSizeY: null, // maximum row height of an item
+                resizable: {
+                   enabled: false,
+                },
+                draggable: {
+                   enabled: true,
+                   handle: '.drag-handle'
+                }
+            };
+
+
+
+            scope.typeOfItem = function(item) {
+                return widgetService.get(item.plugin_module, item.plugin_name);
+            }
+
+            scope.hoverIn = function(item) {
+                item.$element.find('.widget-content-overlay').css('display', 'block');
+            };
+            scope.hoverOut = function(item) {
+                item.$element.find('.widget-content-overlay').css('display', 'none');
+            };
+
+            scope.remove = function(item) {
+                scope.items = _.remove(scope.items, function(o) { return o != item; });
+            };
+
+            scope.$watch('width', function() {
+                scope.gridsterOpts.columns = Math.floor(scope.width / direc.gridSize);
+                scope.gridsterOpts.minColumns = Math.floor(scope.width / direc.gridSize);
+                //move any item now out of bounds to column 0
+                for (var i=0; i < scope.items.length; ++i) {
+                    if (scope.items[i].position.col + scope.items[i].size.x > scope.gridsterOpts.columns) {
+                        scope.items[i].position.col = 0;
+                    }
+                }
+            });
+            scope.$watch('height', function() {
+                scope.gridsterOpts.minRows = Math.floor(scope.height / direc.gridSize);
+                scope.gridsterOpts.maxRows = Math.floor(scope.height / direc.gridSize);
+                //move any item now out of bounds to row 0
+                for (var i=0; i < scope.items.length; ++i) {
+                    if (scope.items[i].position.row + scope.items[i].size.y > scope.gridsterOpts.maxRows) {
+                        scope.items[i].position.row = 0;
+                    }
+                }
+            });
+
         }
     };
     return direc;

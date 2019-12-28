@@ -1,4 +1,4 @@
-angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, dashboardService, deviceTypeService, widgetService) {
+angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, $timeout, dashboardService, deviceTypeService, widgetService) {
     $scope.deviceWidth = 1920;
     $scope.deviceHeight = 1080;
     $scope.deviceTopMargin = 16;
@@ -61,32 +61,48 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
 
 
     $scope.canvasStyle = function() {
-        if ($scope.selectedBoard.portrait) {
-            return {
-                "width": $scope.selectedBoard.height + "px",
-                "height": $scope.selectedBoard.width + "px",
-                "min-width": $scope.selectedBoard.height + "px",
-                "min-height": $scope.selectedBoard.width + "px"
-
-            }
-        } else {
-            return {
-                "width": $scope.selectedBoard.width + "px",
-                "height": $scope.selectedBoard.height + "px",
-                "min-width": $scope.selectedBoard.width + "px",
-                "min-height": $scope.selectedBoard.height + "px"
-            }
+        return {
+            "width": $scope.selectedBoard.width + "px",
+            "height": $scope.selectedBoard.height + "px",
+            "min-width": $scope.selectedBoard.width + "px",
+            "min-height": $scope.selectedBoard.height + "px"
         }
     }
 
-
-    $scope.$watch("selectedBoard.device", function(ni, oi) {
-        var device = _.first(_.filter($scope.deviceTypes, {name : ni}));
-        $scope.selectedBoard.width = device.width;
-        $scope.selectedBoard.height = device.height;
+    function computeSelectedBoardSize() {
+        var device = _.first(_.filter($scope.deviceTypes, {name : $scope.selectedBoard.device}));
+        if ($scope.selectedBoard.portrait) {
+            $scope.selectedBoard.width = device.height;
+            $scope.selectedBoard.height = device.width;
+        } else {
+            $scope.selectedBoard.width = device.width;
+            $scope.selectedBoard.height = device.height;
+        }
         $scope.selectedBoard.margin_top = device.margin_top;
         $scope.selectedBoard.margin_bottom = device.margin_bottom;
         $scope.selectedBoard.customizable = device.customizable;
+    }
+
+    function refreshPages() {
+        if (!$scope.pageBackup) {
+            $scope.pageBackup = $scope.selectedBoard.pages;
+            $scope.selectedBoard.pages = [];
+            $timeout(function() {
+                $scope.selectedBoard.pages = $scope.pageBackup;
+                $scope.pageBackup = null;
+            }, 1);
+        }
+    }
+
+    $scope.$watch("selectedBoard.device", function(ni, oi) {
+        computeSelectedBoardSize();
+        refreshPages();
+
+    });
+
+    $scope.$watch("selectedBoard.portrait", function(ni, oi) {
+        computeSelectedBoardSize();
+        refreshPages();
     });
 
 });
@@ -99,6 +115,10 @@ angular.module('hassdash').controller('NewWidgetCtrl', function ($scope, $uibMod
         plugin_module: $ctrl.type.module,
         plugin_name: $ctrl.type.name,
         size: $ctrl.type.availableSizes[0].value,
+        position: {
+            row: 0,
+            col: 0
+        },
         show_label: $ctrl.type.show_label
     };
 

@@ -1,4 +1,4 @@
-angular.module('hassdash', ['ui.bootstrap','ui.router','ngAnimate', 'oc.lazyLoad', 'ngFitText']);
+angular.module('hassdash', ['ui.bootstrap','ui.router','ngAnimate', 'oc.lazyLoad', 'ngFitText', 'gridster']);
 
 angular.module('hassdash').config(function($stateProvider, $urlRouterProvider) {
 

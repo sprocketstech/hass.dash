@@ -65,7 +65,6 @@ angular.module('hassdash').directive('widgetContent', function($log, $q, $window
             el.children().data('$ngControllerController', templateCtrl);
         }
         $compile(el.contents())(templateScope);
-        //$compile(el)(templateScope);
         element.empty();
         element.append(el);
         // destroy old scope
@@ -98,8 +97,8 @@ angular.module('hassdash').directive('widgetContent', function($log, $q, $window
 
             var currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, null);
             scope.$on('widgetConfigChanged', function() {
-                element.width(scope.config.size.width * 48 + 'px');
-                element.height(scope.config.size.height * 48 + 'px');
+                element.width(scope.config.size.x * 48 + 'px');
+                element.height(scope.config.size.y * 48 + 'px');
                 currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, currentScope);
             });
             scope.$on('widgetReload', function() {
@@ -109,7 +108,7 @@ angular.module('hassdash').directive('widgetContent', function($log, $q, $window
             renderError(element, "Error loading widget template: " + err.message);
         });
 
-        element.width(scope.config.size.width * 48 + 'px');
-        element.height(scope.config.size.height * 48 + 'px');
+        element.width(scope.config.size.x * 48 + 'px');
+        element.height(scope.config.size.y * 48 + 'px');
     }
 });

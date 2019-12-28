@@ -1,7 +1,18 @@
-<div class="dashboard-canvas border-success">
-    <table ng-style="margins">
-        <tr ng-repeat="x in [].constructor(rows) track by $index">
-            <td ng-repeat="x in [].constructor(columns) track by $index" class="dashboard-grid"></td>
-        </tr>
-    </table>
+<div class="border-success">
+    <div gridster="gridsterOpts">
+        <ul>
+            <li gridster-item="customItemMap"
+                ng-repeat="item in items">
+                <div class="widget-content-wrapper" ng-mouseover="hoverIn(this.gridsterItem)" ng-mouseleave="hoverOut(this.gridsterItem)">
+                    <div class="widget-content-overlay">
+                        <i class="drag-handle fas fa-arrows-alt"></i>
+                        <a class="button button-clear" ng-click="edit(item)"><i class="fas fa-edit"></i></a>
+                        <a class="button button-clear" ng-click="remove(item)"><i class="fas fa-trash"></i></a>
+                    </div>
+                    <widget-content type="typeOfItem(item)" config="item" editable="true">
+                    </widget-content>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>

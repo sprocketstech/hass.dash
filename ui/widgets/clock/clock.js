@@ -3,7 +3,10 @@ angular.module('hassdash.widget.clock', ['hassdash']);
 
 
 angular.module('hassdash.widget.clock').controller('clockController', function($scope, $interval) {
-    var currentTime = new moment($scope.value);
+    var currentTime = new moment();
+    if ($scope.value) {
+        currentTime = new moment($scope.value);
+    }
     if (!$scope.config.time_format) {
         $scope.config.time_format = 'h:mm A';
     }

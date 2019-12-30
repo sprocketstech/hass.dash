@@ -1,4 +1,4 @@
-angular.module('hassdash').directive('widgetContent', function($log, $q, $window, widgetService, $compile, $controller, $injector) {
+angular.module('hassdash').directive('widgetContent', function($log, $q, $window, widgetService, $compile, $controller, gridSize) {
     var errorTemplate = '<div class="alert alert-danger">##</div>';
     var loadingTemplate = '\
       <div class="progress progress-striped active">\n\
@@ -97,8 +97,8 @@ angular.module('hassdash').directive('widgetContent', function($log, $q, $window
 
             var currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, null);
             scope.$on('widgetConfigChanged', function() {
-                element.width(scope.config.size.x * 48 + 'px');
-                element.height(scope.config.size.y * 48 + 'px');
+                element.width(scope.config.size.x * gridSize + 'px');
+                element.height(scope.config.size.y * gridSize + 'px');
                 currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, currentScope);
             });
             scope.$on('widgetReload', function() {

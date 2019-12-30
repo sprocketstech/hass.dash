@@ -1,14 +1,14 @@
-angular.module('hassdash').directive('dashboardCanvas', function($timeout, widgetService, _) {
+angular.module('hassdash').directive('dashboardCanvas', function($timeout, widgetService, gridSize, _) {
     var direc = {
         restrict: 'E',
         replace: true,
         scope: {
             items: '=',
             width: '=',
-            height: '='
+            height: '=',
+            onEdit: '&'
         },
         templateUrl: 'directive/dashboardCanvas/dashboardCanvas.html',
-        gridSize: 48,
         link: function(scope, element, attrs, fn) {
             scope.customItemMap = {
                 sizeX: 'item.size.x',
@@ -20,19 +20,19 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
             scope.gridsterOpts = {
                 isMobile: false,
                 mobileModeEnabled: false,
-                columns: Math.floor(scope.width / direc.gridSize), // the width of the grid, in columns
+                columns: Math.floor(scope.width / gridSize), // the width of the grid, in columns
                 pushing: false,
                 floating: false,
                 swapping: true,
                 width: scope.width,
-                colWidth: direc.gridSize,
+                colWidth: gridSize,
                 rowHeight: 'match', // can be an integer or 'match'.  Match uses the colWidth, giving you square widgets.
                 margins: [0, 0], // the pixel distance between each widget
                 outerMargin: false, // whether margins apply to outer edges of the grid
                 sparse: false, // "true" can increase performance of dragging and resizing for big grid (e.g. 20x50)
-                minColumns:  Math.floor(scope.width / direc.gridSize),
-                minRows:   Math.floor(scope.height / direc.gridSize),
-                maxRows:  Math.floor(scope.height / direc.gridSize),
+                minColumns:  Math.floor(scope.width / gridSize),
+                minRows:   Math.floor(scope.height / gridSize),
+                maxRows:  Math.floor(scope.height / gridSize),
                 defaultSizeX: 1, // the default width of a gridster item, if not specifed
                 defaultSizeY: 1, // the default height of a gridster item, if not specified
                 minSizeX: 1, // minimum column width of an item
@@ -65,9 +65,21 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
                 scope.items = _.remove(scope.items, function(o) { return o != item; });
             };
 
+            scope.edit = function(item) {
+                var editItem = _.cloneDeep(item);
+                scope.onEdit()(editItem).then(function(res) {
+                    scope.remove(item);
+                    scope.items.push(res);
+                    $timeout(function() {
+                        scope.$broadcast('widgetConfigChanged');
+                    },1);
+
+                });
+            };
+
             scope.$watch('width', function() {
-                scope.gridsterOpts.columns = Math.floor(scope.width / direc.gridSize);
-                scope.gridsterOpts.minColumns = Math.floor(scope.width / direc.gridSize);
+                scope.gridsterOpts.columns = Math.floor(scope.width / gridSize);
+                scope.gridsterOpts.minColumns = Math.floor(scope.width / gridSize);
                 //move any item now out of bounds to column 0
                 for (var i=0; i < scope.items.length; ++i) {
                     if (scope.items[i].position.col + scope.items[i].size.x > scope.gridsterOpts.columns) {
@@ -76,8 +88,8 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
                 }
             });
             scope.$watch('height', function() {
-                scope.gridsterOpts.minRows = Math.floor(scope.height / direc.gridSize);
-                scope.gridsterOpts.maxRows = Math.floor(scope.height / direc.gridSize);
+                scope.gridsterOpts.minRows = Math.floor(scope.height / gridSize);
+                scope.gridsterOpts.maxRows = Math.floor(scope.height / gridSize);
                 //move any item now out of bounds to row 0
                 for (var i=0; i < scope.items.length; ++i) {
                     if (scope.items[i].position.row + scope.items[i].size.y > scope.gridsterOpts.maxRows) {

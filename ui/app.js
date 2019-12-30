@@ -12,6 +12,7 @@ angular.module('hassdash').config(function($stateProvider, $urlRouterProvider) {
 });
 
 angular.module('hassdash').constant('_', window._);
+angular.module('hassdash').constant('gridSize', 48);
 
 angular.module('hassdash').run(function($rootScope) {
     $rootScope._ = window._;

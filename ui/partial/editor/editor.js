@@ -1,8 +1,4 @@
-angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, $timeout, dashboardService, deviceTypeService, widgetService) {
-    $scope.deviceWidth = 1920;
-    $scope.deviceHeight = 1080;
-    $scope.deviceTopMargin = 16;
-    $scope.deviceBottomMargin = 16;
+angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, $timeout, $q, gridSize, dashboardService, deviceTypeService, widgetService) {
     $scope.deviceCustomizable = false;
 
     dashboardService.getAll().then(function(res) {
@@ -38,16 +34,40 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
         });
     };
 
-    $scope.newWidget = function(page, widgetType) {
+    $scope.editWidget = function(item) {
+        var deferred = $q.defer();
+        var widgetType = widgetService.get(item.plugin_module, item.plugin_name);
         var modalInstance = $uibModal.open({
-            templateUrl: 'newWidget.html',
-            controller: 'NewWidgetCtrl',
+            templateUrl: 'editWidget.html',
+            controller: 'EditWidgetCtrl',
             controllerAs: '$ctrl',
             size: 'xl',
             resolve: {
               items: function () {
                 return {
-                    page: page,
+                    type: widgetType,
+                    item: item
+                };
+              }
+            }
+          });
+
+          modalInstance.result.then(function (widgetConfig) {
+              deferred.resolve(item);
+          });
+
+        return deferred.promise;
+    };
+
+    $scope.newWidget = function(page, widgetType) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'editWidget.html',
+            controller: 'EditWidgetCtrl',
+            controllerAs: '$ctrl',
+            size: 'xl',
+            resolve: {
+              items: function () {
+                return {
                     type: widgetType
                 };
               }
@@ -61,11 +81,14 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
 
 
     $scope.canvasStyle = function() {
+        var gridWidth = Math.floor($scope.selectedBoard.width/gridSize) * gridSize;
+        var gridHeight = Math.floor($scope.selectedBoard.height/gridSize) * gridSize;
+
         return {
-            "width": $scope.selectedBoard.width + "px",
-            "height": $scope.selectedBoard.height + "px",
-            "min-width": $scope.selectedBoard.width + "px",
-            "min-height": $scope.selectedBoard.height + "px"
+            "width": gridWidth + "px",
+            "height": gridHeight + "px",
+            "min-width": gridWidth + "px",
+            "min-height": gridHeight + "px"
         }
     }
 
@@ -78,8 +101,6 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
             $scope.selectedBoard.width = device.width;
             $scope.selectedBoard.height = device.height;
         }
-        $scope.selectedBoard.margin_top = device.margin_top;
-        $scope.selectedBoard.margin_bottom = device.margin_bottom;
         $scope.selectedBoard.customizable = device.customizable;
     }
 
@@ -97,30 +118,44 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
     $scope.$watch("selectedBoard.device", function(ni, oi) {
         computeSelectedBoardSize();
         refreshPages();
-
     });
 
     $scope.$watch("selectedBoard.portrait", function(ni, oi) {
-        computeSelectedBoardSize();
-        refreshPages();
+        if (ni != oi) {
+            //swap the width and height
+            var w = $scope.selectedBoard.width;
+            $scope.selectedBoard.width = $scope.selectedBoard.height;
+            $scope.selectedBoard.height = w;
+            refreshPages();
+        }
     });
-
+    $scope.$watch("selectedBoard.height", function(ni, oi) {
+        if (ni != oi) {
+            refreshPages();
+        }
+    });
 });
 
-angular.module('hassdash').controller('NewWidgetCtrl', function ($scope, $uibModalInstance, items, entityService) {
+angular.module('hassdash').controller('EditWidgetCtrl', function ($scope, $uibModalInstance, items, entityService) {
     var $ctrl = this;
     $ctrl.type = items.type;
-    $ctrl.model = {
-        name: $ctrl.type.name,
-        plugin_module: $ctrl.type.module,
-        plugin_name: $ctrl.type.name,
-        size: $ctrl.type.availableSizes[0].value,
-        position: {
-            row: 0,
-            col: 0
-        },
-        show_label: $ctrl.type.show_label
-    };
+    if (items.item) {
+        $ctrl.model = items.item;
+        $ctrl.isNew = false;
+    } else {
+        $ctrl.model = {
+            name: $ctrl.type.name,
+            plugin_module: $ctrl.type.module,
+            plugin_name: $ctrl.type.name,
+            size: $ctrl.type.availableSizes[0].value,
+            position: {
+                row: 0,
+                col: 0
+            },
+            show_label: $ctrl.type.show_label
+        };
+        $ctrl.isNew = true;
+    }
 
     entityService.get($ctrl.type.entity_filter).then(function(results) {
         $ctrl.entities = results;

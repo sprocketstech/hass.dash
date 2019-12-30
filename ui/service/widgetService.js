@@ -2,6 +2,7 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
 
     var templateCache = {}
     var widgetService = {};
+    widgetService.cachedWidgets = [];
 
     widgetService.load = function(urls) {
         var deferred = $q.defer();
@@ -42,17 +43,31 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
 
     widgetService.getAll = function() {
         var deferred = $q.defer();
-        deferred.resolve(widgets);
+        if (widgetService.cachedWidgets.length === 0) {
+            $http({
+                method: 'GET',
+                url: '/api/widgets'
+            }).success(function(response){
+                //cache the result
+                widgetService.cachedWidgets = response;
+                deferred.resolve(widgetService.cachedWidgets);
+            }).error(function(error){
+                deferred.reject({message: error});
+            });
+        } else {
+            deferred.resolve(widgetService.cachedWidgets);
+        }
+
         return deferred.promise;
     };
 
     widgetService.get = function(module, name) {
-        var widget = _.filter(widgets, function(w) {
+        var widget = _.filter(widgetService.cachedWidgets, function(w) {
             return w.name === name && w.module === module;
         });
         return widget[0];
     };
-
+/*
     var widgets = [
         {
             name: "Clock",
@@ -65,7 +80,8 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
             availableSizes: [
                 {name: "Small", value: {x: 2, y: 1}},
                 {name: "Medium", value: {x: 3, y: 1}},
-                {name: "Large", value: {x: 4, y: 1}}
+                {name: "Large", value: {x: 4, y: 1}},
+                {name: "X-Large", value: {x: 6, y: 2}}
             ],
             options: [
                 {
@@ -122,6 +138,6 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
         { name: "Weather Forecast", plugin: 'sprockets.widget.weather_forecast' },
         { name: "Button", plugin: 'sprockets.widget.button' }
     ];
-
+*/
     return widgetService;
 });

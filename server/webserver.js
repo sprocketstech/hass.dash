@@ -19,9 +19,36 @@ webserver.init = function(log, staticRoot, port) {
         webserver.logger.verbose(util.format('X: %s %s %s', req.method, req.url, req.path));
         next();
     });
+
+    //add some convenience functions to all responses
+    webserver.router.use(function(req, res, next) {
+        res.handleError = function(err) {
+            if (err.code === 417) {
+                res.status(417).send({code: 417, message: err.message});
+            } else if (err.code === 404) {
+                res.status(404).send({code: 404, message: err.message});
+            }
+            else {
+                loggingService.error(err.message, err.stack);
+                res.status(500).send(err);
+            }
+        };
+        res.success = function(body) {
+            res.status(200).send(body);
+        };
+        res.unauthorized = function(code, err) {
+            res.status(401).send({code: code, message: err});  
+        };
+        res.notFound = function() {
+            res.status(404).send({code: 404, message: 'Not found'});
+        };
+        next();
+    });
     
     //serve any static files out of the configured ui root
     webserver.router.use(express.static(staticRoot));
+    //serve any widgets out of the widget subdirectory
+    webserver.router.use('/widgets', express.static(__dirname + '/widgets'));
 
     webserver.app.use('', webserver.router);
     //setup the http server

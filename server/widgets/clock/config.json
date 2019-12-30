@@ -1,0 +1,32 @@
+{
+    "name": "Clock",
+    "module": "hassdash.widget.clock",
+    "controller": "clockController",
+    "show_label": false,
+    "entity_filter": [
+        "sensor.date_time_iso"
+    ],
+    "availableSizes": [
+        {"name": "Small", "value": {"x": 2, "y": 1}},
+        {"name": "Medium", "value": {"x": 3, "y": 1}},
+        {"name": "Large", "value": {"x": 4, "y": 1}},
+        {"name": "X-Large", "value": {"x": 6, "y": 2}}
+    ],
+    "options": [
+        {
+            "name": "Time Format",
+            "key": "time_format",
+            "type": "select",
+            "values": [
+                    {"display": "8:30 PM", "value": "h:mm A"},
+                    {"display": "8:30:33 PM", "value": "h:mm:ss A"},
+                    {"display": "20:30", "value": "HH:mm"},
+                    {"display": "20:30:33", "value": "HH:mm:ss"}
+
+            ]
+        }
+    ],
+    "templateUrl": "clock/clock.html",
+    "templateCss": ["clock/clock.css"],
+    "templateJs": ["clock/clock.js"]
+}

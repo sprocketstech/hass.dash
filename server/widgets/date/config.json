@@ -1,0 +1,32 @@
+{
+    "name": "Date",
+    "module": "hassdash.widget.date",
+    "controller": "dateController",
+    "show_label": false,
+    "entity_filter": [
+        "sensor.date_time_iso"
+    ],
+    "availableSizes": [
+        {"name": "Small", "value": {"x": 2, "y": 1}},
+        {"name": "Medium", "value": {"x": 3, "y": 1}},
+        {"name": "Large", "value": {"x": 4, "y": 1}}
+    ],
+    "options": [
+        {
+            "name": "Date Format",
+            "key": "date_format",
+            "type": "select",
+            "values": [
+                    {"display": "Friday, August 2nd 1985", "value": "dddd, MMMM Do YYYY"},
+                    {"display": "8/2/1985", "value": "M/D/YYYY"},
+                    {"display": "8/2/85", "value": "M/D/YY"},
+                    {"display": "August 2, 1985", "value": "MMMM D, YYYY"},
+                    {"display": "Aug 2, 1985", "value": "MMM D, YYYY"}
+
+            ]
+        }
+    ],
+    "templateUrl": "date/date.html",
+    "templateCss": ["date/date.css"],
+    "templateJs": ["date/date.js"]
+}

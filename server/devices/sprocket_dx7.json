@@ -1,0 +1,8 @@
+{ 
+    "name":"Sprocket DX7",
+    "width":800,
+    "height":480,
+    "margin_top":16,
+    "margin_bottom":16,
+    "customizable":false
+ }

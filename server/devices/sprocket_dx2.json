@@ -1,0 +1,8 @@
+{ 
+    "name":"Sprocket DX2",
+    "width":320,
+    "height":240,
+    "margin_top":16,
+    "margin_bottom":16,
+    "customizable":false
+ }

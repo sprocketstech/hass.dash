@@ -5,7 +5,8 @@ module.exports = function(argv) {
         log_level: 'verbose',
         html_root: __dirname + '/../ui/',
         web_port: 8099,
-        widget_directory: __dirname + '/widgets'
+        widget_directory: __dirname + '/widgets',
+        devices_directory: __dirname + '/devices'
     }
     return config;
 }

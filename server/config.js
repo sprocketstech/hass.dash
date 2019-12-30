@@ -6,7 +6,8 @@ module.exports = function(argv) {
         html_root: __dirname + '/../ui/',
         web_port: 8099,
         widget_directory: __dirname + '/widgets',
-        devices_directory: __dirname + '/devices'
+        devices_directory: __dirname + '/devices',
+        dashboards: __dirname + '/dashboards.yaml'
     }
     return config;
 }

@@ -1,6 +1,5 @@
 var path = require('path');
 
-var express = require('express');
 var svc = {
     devices: []
 };

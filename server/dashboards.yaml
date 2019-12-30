@@ -1,0 +1,64 @@
+- name: Command Center
+  device: 1080P Monitor
+  pages:
+    - widgets:
+        - name: Date
+          plugin_module: hassdash.widget.date
+          plugin_name: Date
+          size:
+            x: 2
+            y: 1
+          position:
+            row: 1
+            col: 8
+          show_label: false
+          entity: sensor.date_time_iso
+          date_format: dddd, MMMM Do YYYY
+        - name: Clock
+          plugin_module: hassdash.widget.clock
+          plugin_name: Clock
+          size:
+            x: 4
+            y: 1
+          position:
+            row: 1
+            col: 0
+          show_label: false
+          entity: sensor.date_time_iso
+          time_format: h:mm:ss A
+    - widgets: []
+  width: 1920
+  height: 1080
+  customizable: false
+- name: New Board
+  device: Sprocket DX2
+  pages:
+    - widgets:
+        - name: Clock
+          plugin_module: hassdash.widget.clock
+          plugin_name: Clock
+          size:
+            x: 2
+            y: 1
+          position:
+            row: 1
+            col: 2
+          show_label: false
+          entity: sensor.date_time_iso
+          time_format: h:mm A
+        - name: Date
+          plugin_module: hassdash.widget.date
+          plugin_name: Date
+          size:
+            x: 4
+            y: 1
+          position:
+            row: 2
+            col: 1
+          show_label: false
+          entity: sensor.date_time_iso
+          date_format: dddd, MMMM Do YYYY
+  width: 320
+  height: 240
+  customizable: false
+  portrait: false

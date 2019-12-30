@@ -1,7 +1,7 @@
 angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, $timeout, $q, gridSize, dashboardService, deviceTypeService, widgetService) {
     $scope.deviceCustomizable = false;
 
-    dashboardService.getAll().then(function(res) {
+    dashboardService.get().then(function(res) {
         $scope.boards = res;
         $scope.selectedBoard = $scope.boards[0];
     });
@@ -22,10 +22,15 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
     $scope.addBoard = function() {
         var newBoard = {
             name: "New Board",
-            device: $scope.deviceTypes[0].name
+            device: $scope.deviceTypes[0].name,
+            pages: []
         };
         $scope.boards.push(newBoard);
         $scope.selectedBoard = newBoard;
+    };
+
+    $scope.saveBoard = function() {
+        dashboardService.save($scope.boards);
     };
 
     $scope.addPage = function() {

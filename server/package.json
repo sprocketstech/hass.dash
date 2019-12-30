@@ -19,7 +19,8 @@
     "winston": "*",
     "yargs": "*",
     "express": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "yaml": "*"
   },
   "devDependencies": {}
 }

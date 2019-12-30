@@ -1,30 +1,31 @@
-angular.module('hassdash').factory('dashboardService', function($q) {
+angular.module('hassdash').factory('dashboardService', function($http, $q) {
 
     var dashboardService = {};
 
-    dashboardService.getAll = function() {
+    dashboardService.get = function() {
         var deferred = $q.defer();
-
-        deferred.resolve([
-            {
-                name: "Main",
-                device: "Sprocket X2",
-                portrait: true,
-                pages: [
-                    {widgets: []},
-                    {widgets: []}
-                ]
-            },
-            {name: "Test 1", device: "1080P Monitor"},
-            {name: "Test 2", device: "Sprocket X5"},
-            {name: "Test 3", device: "Sprocket X7"},
-            {name: "Test 4", device: "Sprocket X10"},
-            {name: "Test 5", device: "Other"},
-            {name: "Test 6", device: "Galaxy Tab A"}
-        ]);
-
+        $http({
+            method: 'GET',
+            url: '/api/dashboards'
+        }).success(function(response){
+            deferred.resolve(response);
+        }).error(function(error){
+            deferred.reject({message: error});
+        });
         return deferred.promise;
     };
-
+    dashboardService.save = function(obj) {
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: '/api/dashboards',
+            data: obj
+        }).success(function(response){
+            deferred.resolve(response);
+        }).error(function(error){
+            deferred.reject({message: error});
+        });
+        return deferred.promise;
+    };
     return dashboardService;
 });

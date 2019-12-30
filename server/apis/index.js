@@ -1,7 +1,7 @@
 
 
-module.exports = function(webserver) {
+module.exports = function(config, webserver) {
     return {
-        widgets: require('./widgetApi.js')(webserver)
+        widgets: require('./widgetApi.js')(config, webserver)
     }
 }

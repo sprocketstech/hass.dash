@@ -1,3 +1,5 @@
+
+var express = require('express');
 var svc = {
     widgets: []
 };
@@ -16,21 +18,20 @@ var findPlugins = function(dir) {
     return ret;
 };
 
-function loadWidgets() {
-    //widgets are in a subdirectory "widgets"
-    //at some point this should be configurable....
-    var widgetDir = __dirname + "/../widgets";
+function loadWidgets(widgetDir) {
     svc.widgets = findPlugins(widgetDir);
 }
 
-function init(webserver) {
-    loadWidgets();
+function init(widgetDir, webserver) {
+    loadWidgets(widgetDir);
     webserver.router.route('/api/widgets').get(function(req, res) {
         res.success(svc.widgets);
     });
+    //serve any widgets out of the widget subdirectory
+    webserver.router.use('/widgets', express.static(widgetDir));
     return svc;
 }
 
-module.exports = function(webserver) {
-    return init(webserver);
+module.exports = function(config, webserver) {
+    return init(config.widget_directory, webserver);
 };

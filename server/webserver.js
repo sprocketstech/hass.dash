@@ -6,7 +6,7 @@ var http = require('http');
 
 var webserver = {}
 
-webserver.init = function(log, staticRoot, port) {
+webserver.init = function(log, config) {
     webserver.app = express();
     webserver.router = express.Router();
     webserver.logger = log;
@@ -46,19 +46,17 @@ webserver.init = function(log, staticRoot, port) {
     });
     
     //serve any static files out of the configured ui root
-    webserver.router.use(express.static(staticRoot));
-    //serve any widgets out of the widget subdirectory
-    webserver.router.use('/widgets', express.static(__dirname + '/widgets'));
+    webserver.router.use(express.static(config.html_root));
 
     webserver.app.use('', webserver.router);
     //setup the http server
     webserver.server = http.Server(webserver.app);
-    webserver.server.listen(port, function () {
-        webserver.logger.info('Server listening on port ' + port + '!');
+    webserver.server.listen(config.web_port, function () {
+        webserver.logger.info('Server listening on port ' + config.web_port + '!');
     });
 }
 
 module.exports = function(log, config) {
-    webserver.init(log, config.html_root, config.web_port);
+    webserver.init(log, config);
     return webserver;
 }

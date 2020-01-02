@@ -20,7 +20,10 @@
     "yargs": "*",
     "express": "*",
     "body-parser": "*",
-    "yaml": "*"
+    "yaml": "*",
+    "socket.io": "*",
+    "socketio-wildcard": "*",
+    "socket.io-client": "*"
   },
   "devDependencies": {}
 }

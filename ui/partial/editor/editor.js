@@ -1,7 +1,7 @@
 angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, $timeout, $q, gridSize, dashboardService, deviceTypeService, widgetService) {
     $scope.deviceCustomizable = false;
 
-    dashboardService.get().then(function(res) {
+    dashboardService.getAll().then(function(res) {
         $scope.boards = res;
         $scope.selectedBoard = $scope.boards[0];
     });
@@ -168,10 +168,6 @@ angular.module('hassdash').controller('EditWidgetCtrl', function ($scope, $uibMo
             $ctrl.model.entity = $ctrl.entities[0].entity_id;
         }
     });
-
-    $ctrl.entityValue = function() {
-        return entityService.getValue($ctrl.model.entity);
-    };
 
     $ctrl.ok = function () {
       $uibModalInstance.close($ctrl.model);

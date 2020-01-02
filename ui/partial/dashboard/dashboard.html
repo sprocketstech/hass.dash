@@ -1,0 +1,16 @@
+<div class="col-md-12 dashboard-view" ng-controller="DashboardCtrl">
+    <div ng-style="dashStyle()">
+        <div uib-alert class="alert-danger" ng-if="hasError">{{error}}</div>
+
+        <div uib-carousel interval="0" no-wrap="false" ng-if="!hasError" active="activePage" no-transition="true">
+            <div uib-slide ng-repeat="page in dash.pages track by $index" index="$index" active="!$index" class="carousel-item">
+                <dashboard-viewer ng-style="dashStyle()"
+                                    items="page.widgets"
+                                    width="device.width"
+                                    height="device.height">
+                </dashboard-viewer>
+            </div>
+        </div>
+    </div>
+
+</div>

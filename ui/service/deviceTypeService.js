@@ -22,5 +22,21 @@ angular.module('hassdash').factory('deviceTypeService',function($http, $q) {
 
         return deferred.promise;
     };
+
+    deviceTypeService.get = function(name) {
+        var deferred = $q.defer();
+        deviceTypeService.getAll().then(function(response) {
+            var dt = _.filter(response, function(d) {
+                return d.name === name;
+            });
+            if (dt.length > 0) {
+                deferred.resolve(dt[0]);
+            } else {
+                deferred.reject("Device type " + name + " was not found.");
+            }
+        });
+        return deferred.promise;
+    };
+
     return deviceTypeService;
 });

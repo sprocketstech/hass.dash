@@ -1,0 +1,16 @@
+<div class="col-md-12" ng-controller="TestwidgetCtrl">
+    <div class="row">
+        <div class="col-md-6">
+            <textarea style="width: 100%" rows="13" ng-model="testItem"></textarea>
+        </div>
+        <div class="col-md-6 widget-test-preview">
+            <widget-content type="typeOfItem(item)" config="item" editable="false" value="value">
+            </widget-content>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <textarea style="width: 100%" rows="13" ng-model="testValue"></textarea>
+        </div>
+    </div>
+</div>

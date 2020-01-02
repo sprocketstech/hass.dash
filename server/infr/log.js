@@ -142,7 +142,7 @@ module.exports = function(config) {
 
     //order is important here! if we set debug env after require of debug
     //nothing is logged.
-    if (logLevel === 'debug' || logLevel === 'verbose') {
+    if (logLevel === 'verbose') {
         process.env['DEBUG'] = '*';
     }
 

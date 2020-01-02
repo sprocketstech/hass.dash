@@ -1,0 +1,10 @@
+<div class="current-weather current-weather-x-{{config.size.x}} current-weather-y-{{config.size.y}}">
+    <div>
+        <span class="mdi mdi-weather-{{value.state}} current-weather-conditions"></span>
+        <span class="current-temperature">{{value.attributes.temperature | number:0}}</span>    
+    </div>
+    <div class="current-weather-forecast">
+        <div>H: {{value.attributes.forecast[0].temperature}}</div>
+        <div>L: {{value.attributes.forecast[0].templow}}</div>
+    </div>
+</div>

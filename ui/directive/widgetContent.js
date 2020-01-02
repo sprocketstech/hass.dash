@@ -1,4 +1,4 @@
-angular.module('hassdash').directive('widgetContent', function($log, $q, $window, widgetService, $compile, $controller, gridSize) {
+angular.module('hassdash').directive('widgetContent', function($log, widgetService, entityService, $compile, $controller, gridSize) {
     var errorTemplate = '<div class="alert alert-danger">##</div>';
     var loadingTemplate = '\
       <div class="progress progress-striped active">\n\
@@ -26,84 +26,94 @@ angular.module('hassdash').directive('widgetContent', function($log, $q, $window
         element.html(errorTemplate.replace(/##/g, msg));
     }
 
-    function compileWidget(scope, element, content, controller, currentScope) {
-        var config = scope.config;
-        var value = scope.value;
-        var newScope = currentScope;
-        var model = {
-            config: config,
-            value: value
+    function monitorEntity(widgetScope) {
+        if (!widgetScope.value) {
+            entityService.onStateChange(widgetScope, function(event) {
+                if (event.entity_id === widgetScope.config.entity) {
+                    //this update matches the entity we are watching, push it
+                    //to the widget
+                    widgetScope.value = event;
+                }
+            });
+            //set the initial value
+            entityService.getEntity(widgetScope.config.entity).then(function (val) {
+                widgetScope.value = val;
+            });
         }
-        if (!config){
+    }
+
+    function compileWidget(scope, element, content, controller, currentScope) {
+
+        if (!scope.config){
             renderError(element, 'config is undefined')
+            return;
         } else if (!content){
             var msg = 'widget content is undefined, please have a look at your browser log';
             renderError(element, msg);
-        } else {
-            newScope = renderWidget(scope, element, currentScope, model, controller, content);
+            return;
         }
-        return newScope;
-    }
 
-    function renderWidget(scope, element, currentScope, model, controller, content) {
         element.html(loadingTemplate);
-        //add the template
+        //create an element from the HTML
         var el = angular.element(content);
         //create the child scope
-        var templateScope  = scope.$new();
-        //provide the config to the scope
-        if (!model.config) {
-            model.config = {};
-        }
-        templateScope.config = model.config;
-        var locals = {
-            $scope: templateScope,
-            config: model.config
-        };
-        if (controller) {
-            var templateCtrl = $controller(controller, locals);
-            el.children().data('$ngControllerController', templateCtrl);
-        }
-        $compile(el.contents())(templateScope);
+        var widgetScope  = scope.$new();
+        //provide the config and value to the scope
+        widgetScope.config = scope.config;
+        widgetScope.value = scope.value;
+
+        //create the controller
+        var widgetCtrl = $controller(controller, {$scope: widgetScope});
+        el.children().data('$ngControllerController', widgetCtrl);
+
+        $compile(el.contents())(widgetScope);
+
+        //replace the directive element with the widget element
         element.empty();
         element.append(el);
         // destroy old scope
         if (currentScope) {
             currentScope.$destroy();
         }
-        return templateScope;
+        currentScope = widgetScope;
+
+        //start the value updater
+        monitorEntity(widgetScope);
+
+        return currentScope;
     }
 
     function link(scope, element, attrs, fn) {
         //load all the needed files
         var toLoad = [];
-        //html
+        //load the html
         toLoad.push({type: "html", url: scope.type.templateUrl});
+        //if any css defined, add it to the load list
         if (scope.type.hasOwnProperty('templateCss')) {
             for (var i=0; i < scope.type.templateCss.length; ++i) {
                 toLoad.push({type: "css", url: scope.type.templateCss[i]});
             }
         }
+        //if any js defined, add it to the load list
         if (scope.type.hasOwnProperty('templateJs')) {
             for (var i=0; i < scope.type.templateJs.length; ++i) {
                 toLoad.push({type: "js", url: scope.type.templateJs[i]});
             }
         }
 
-        //load the widget HTML
+        //load the widget HTML and dependencies
         widgetService.load(toLoad).then(function(templateHtml) {
             //wrap the widget in a div so that the module is resolved correctly
             var widgetHTML = '<div ng-app="' + scope.type.module + '">' + templateHtml + '</div>';
 
             var currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, null);
+
             scope.$on('widgetConfigChanged', function() {
                 element.width(scope.config.size.x * gridSize + 'px');
                 element.height(scope.config.size.y * gridSize + 'px');
                 currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, currentScope);
             });
-            scope.$on('widgetReload', function() {
-                currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, currentScope);
-            });
+
         }).catch(function (err) {
             renderError(element, "Error loading widget template: " + err.message);
         });

@@ -5,7 +5,7 @@ const argv = require('yargs').argv;
 const config = require('./config.js')(argv)
 const log = require('./infr/log.js')(config)
 const webserver = require('./webserver.js')(log, config)
-const apis = require('./apis/index.js')(config, webserver);
+const apis = require('./apis/index.js')(log, config, webserver);
 
 log.debug("Started, serving dashboards....")
 

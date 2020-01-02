@@ -1,4 +1,4 @@
-angular.module('hassdash').directive('dashboardCanvas', function($timeout, widgetService, gridSize, _) {
+angular.module('hassdash').directive('dashboardCanvas', function($timeout, widgetService, entityService, gridSize, _) {
     var direc = {
         restrict: 'E',
         replace: true,

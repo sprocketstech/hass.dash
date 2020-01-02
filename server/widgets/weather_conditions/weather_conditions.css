@@ -1,0 +1,58 @@
+.current-weather-conditions {
+    font-size: 48px;
+    line-height: 48px;
+    float: left;
+}
+
+.current-temperature {
+    font-size: 26px;
+    line-height: 48px;
+    float: left;
+}
+
+.mdi-weather-partlycloudy::before {
+    content: "\F595";
+}
+
+.current-weather-forecast {
+    text-align: center;
+    display: none;
+    font-size: 16px;
+    float: right;
+}
+ 
+.current-weather-x-1 .current-weather-conditions {
+    font-size: 16px;
+}
+
+
+.current-weather-x-1 .current-temperature {
+    font-size: 16px;
+}
+
+.current-weather-x-3 .current-weather-forecast {
+    display: block;
+}
+
+.current-weather-x-5 .current-weather-forecast {
+    display: block;
+    font-size: 18px;
+}
+
+.current-weather-y-2 .current-weather-conditions {
+    font-size: 96px;
+    line-height: 96px;
+    float: left;
+}
+
+.current-weather-y-2 .current-temperature {
+    font-size: 54px;
+    line-height: 96px;
+    float: left;
+}
+
+
+.current-weather-y-2 .current-weather-forecast {
+    height: 96px;
+    margin-top: 20px;
+}

@@ -52,8 +52,8 @@
           time_format: HH:mm:ss
           entity: sensor.date_time_iso
     - widgets: []
-  width: 760
-  height: 1024
+  width: 1024
+  height: 760
   customizable: false
   portrait: true
 - name: New Board
@@ -71,18 +71,6 @@
             col: 0
           show_label: false
           entity: weather.dark_sky
-        - name: Date
-          plugin_module: hassdash.widget.date
-          plugin_name: Date
-          size:
-            x: 2
-            y: 1
-          position:
-            row: 0
-            col: 4
-          show_label: false
-          entity: sensor.date_time_iso
-          date_format: M/D/YYYY
         - name: Clock
           plugin_module: hassdash.widget.clock
           plugin_name: Clock
@@ -95,6 +83,18 @@
           show_label: false
           entity: sensor.date_time_iso
           time_format: h:mm A
+        - name: Date
+          plugin_module: hassdash.widget.date
+          plugin_name: Date
+          size:
+            x: 2
+            y: 1
+          position:
+            row: 0
+            col: 4
+          show_label: false
+          entity: sensor.date_time_iso
+          date_format: M/D/YYYY
   width: 320
   height: 240
   customizable: false

@@ -3,6 +3,7 @@ var util = require('util');
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
+const io = require('socket.io');
 
 var webserver = {}
 
@@ -51,6 +52,7 @@ webserver.init = function(log, config) {
     webserver.app.use('', webserver.router);
     //setup the http server
     webserver.server = http.Server(webserver.app);
+    webserver.clientHandler = io.listen(webserver.server);
     webserver.server.listen(config.web_port, function () {
         webserver.logger.info('Server listening on port ' + config.web_port + '!');
     });

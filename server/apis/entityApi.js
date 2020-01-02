@@ -1,9 +1,8 @@
 
 const hass = require('../backend/hass.js');
-const io = require('socket.io');
 
 function init(log, config, webserver) {
-    var clientHandler = io.listen(webserver.server);
+    var clientHandler = webserver.clientHandler;
 
     hass.init(log, config.hass_url, config.hass_llat);
     hass.onEntityChange(function(new_ent) {

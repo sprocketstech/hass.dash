@@ -18,10 +18,12 @@ function saveDashboards(newObj) {
     var yamlString = YAML.stringify(newObj);
     fs.writeFileSync(svc.dashboardStore, yamlString);
     svc.dashboards = newObj;
+    svc.clientHandler.sockets.emit('dashboards.changed', {});
 }
 
 function init(dashboardStore, webserver) {
     svc.dashboardStore = dashboardStore;
+    svc.clientHandler = webserver.clientHandler;
     loadDashboards();
     webserver.router.route('/api/dashboards')
         .get(function(req, res) {

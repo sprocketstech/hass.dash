@@ -1,4 +1,4 @@
-angular.module('hassdash').factory('dashboardService', function($http, $q, _) {
+angular.module('hassdash').factory('dashboardService', function($http, $q, _, clientUpdates) {
 
     var dashboardService = {};
 
@@ -43,5 +43,18 @@ angular.module('hassdash').factory('dashboardService', function($http, $q, _) {
         });
         return deferred.promise;
     };
+
+
+    dashboardService.onDashboardsUpdated = function(scope, callback) {
+        clientUpdates.forward('dashboards.changed', scope);
+        var unbind = scope.$on('socket:dashboards.changed', function(event, data) {
+            callback(data);
+        });
+        scope.$on('$destroy', function() {
+            unbind();
+        });
+    }
+
+
     return dashboardService;
 });

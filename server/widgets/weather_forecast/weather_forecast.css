@@ -1,0 +1,126 @@
+
+.weather-forecast {
+    font-size: 16px;
+}
+
+.weather-forecast-day {
+    float: left;
+    display: none;
+    margin-top: 5px;
+}
+/*
+.weather-forecast-day:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    height: 33%;
+    border-right: 1px solid #DCDCDC;
+    position: absolute;
+    top: 5px;
+}*/
+
+.weather-forecast-dow {
+    font-weight: bold;
+}
+.weather-forecast-precip {
+    display: none;
+}
+
+.weather-forecast-y-4.weather-forecast {
+    font-size: 20px;
+}
+
+.weather-forecast-y-4 .weather-forecast-precip {
+    display: block;
+}
+
+.weather-forecast-y-4 .weather-forecast-day {
+    margin-top: 18px;
+}
+/*
+.weather-forecast-y-4 .weather-forecast-day:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    height: 70%;
+    border-right: 1px solid #DCDCDC;
+    position: absolute;
+    top: 5px;
+}
+*/
+.weather-forecast-x-5 .weather-forecast-day {
+    width: 33.33333%;
+}
+
+.weather-forecast-x-5 .weather-forecast-day-0 {
+    display: block;
+}
+
+.weather-forecast-x-5 .weather-forecast-day-1 {
+    display: block;
+}
+
+.weather-forecast-x-5 .weather-forecast-day-2 {
+    display: block;
+}
+
+.weather-forecast-x-6 .weather-forecast-day {
+    width: 25%;
+}
+
+.weather-forecast-x-6 .weather-forecast-day-0 {
+    display: block;
+}
+
+.weather-forecast-x-6 .weather-forecast-day-1 {
+    display: block;
+}
+
+.weather-forecast-x-6 .weather-forecast-day-2 {
+    display: block;
+}
+
+.weather-forecast-x-6 .weather-forecast-day-3 {
+    display: block;
+}
+
+.weather-forecast-x-10 .weather-forecast-day {
+    width: 12.5%;
+}
+
+.weather-forecast-x-10 .weather-forecast-day-0 {
+    display: block;
+}
+
+.weather-forecast-x-10 .weather-forecast-day-1 {
+    display: block;
+}
+
+.weather-forecast-x-10 .weather-forecast-day-2 {
+    display: block;
+}
+
+.weather-forecast-x-10 .weather-forecast-day-3 {
+    display: block;
+}
+
+
+.weather-forecast-x-10 .weather-forecast-day-4 {
+    display: block;
+}
+
+
+.weather-forecast-x-10 .weather-forecast-day-5 {
+    display: block;
+}
+
+
+.weather-forecast-x-10 .weather-forecast-day-6 {
+    display: block;
+}
+
+
+.weather-forecast-x-10 .weather-forecast-day-7 {
+    display: block;
+}
+

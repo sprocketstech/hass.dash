@@ -11,9 +11,20 @@
         {"name": "S", "value": {"x": 2, "y": 1}},
         {"name": "M", "value": {"x": 3, "y": 1}},
         {"name": "L", "value": {"x": 4, "y": 2}},
-        {"name": "XL", "value": {"x": 5, "y": 2}}
+        {"name": "XL", "value": {"x": 5, "y": 2}},
+        {"name": "XXL", "value": {"x": 8, "y": 3}}
     ],
     "options": [
+        {
+            "name": "Icon Color",
+            "key": "icon_color",
+            "type": "select",
+            "values": [
+                    {"display": "Black", "value": "black"},
+                    {"display": "White", "value": "white"}
+
+            ]
+        }
     ],
     "templateUrl": "weather_conditions/weather_conditions.html",
     "templateCss": ["weather_conditions/weather_conditions.css"],

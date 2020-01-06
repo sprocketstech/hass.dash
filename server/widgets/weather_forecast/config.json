@@ -1,0 +1,32 @@
+{
+    "name": "Weather Forecast",
+    "module": "hassdash.widget.weather_forecast",
+    "controller": "weatherForecastController",
+    "show_label": false,
+    "entity_filter": [
+        "weather.*"
+    ],
+    "availableSizes": [
+        {"name": "XS", "value": {"x": 5, "y": 2}},
+        {"name": "S", "value": {"x": 6, "y": 2}},
+        {"name": "M", "value": {"x": 10, "y": 2}},
+        {"name": "L", "value": {"x": 5, "y": 4}},
+        {"name": "XL", "value": {"x": 6, "y": 4}},
+        {"name": "XXL", "value": {"x": 10, "y": 4}}
+    ],
+    "options": [
+        {
+            "name": "Icon Color",
+            "key": "icon_color",
+            "type": "select",
+            "values": [
+                    {"display": "Black", "value": "black"},
+                    {"display": "White", "value": "white"}
+
+            ]
+        }
+    ],
+    "templateUrl": "weather_forecast/weather_forecast.html",
+    "templateCss": ["weather_forecast/weather_forecast.css"],
+    "templateJs": ["weather_forecast/weather_forecast.js"]
+}

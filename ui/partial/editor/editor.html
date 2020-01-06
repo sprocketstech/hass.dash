@@ -19,7 +19,7 @@
                     <label class="mr-3">Device: </label>
                     <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{selectedBoard.device}}</a>
                     <div class="dropdown-menu">
-                        <a ng-repeat="device in deviceTypes" class="dropdown-item" href="#" ng-click="selectedBoard.device = device.name">{{device.name}}</a>
+                        <a ng-repeat="device in deviceTypes" class="dropdown-item" href="#" ng-click="setDeviceForBoard(device.name)">{{device.name}}</a>
                     </div>
                 </div>
 

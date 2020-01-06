@@ -97,17 +97,7 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
         }
     }
 
-    function computeSelectedBoardSize() {
-        var device = _.first(_.filter($scope.deviceTypes, {name : $scope.selectedBoard.device}));
-        if ($scope.selectedBoard.portrait) {
-            $scope.selectedBoard.width = device.height;
-            $scope.selectedBoard.height = device.width;
-        } else {
-            $scope.selectedBoard.width = device.width;
-            $scope.selectedBoard.height = device.height;
-        }
-        $scope.selectedBoard.customizable = device.customizable;
-    }
+
 
     function refreshPages() {
         if (!$scope.pageBackup) {
@@ -120,23 +110,60 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
         }
     }
 
-    $scope.$watch("selectedBoard.device", function(ni, oi) {
-        computeSelectedBoardSize();
+    $scope.setDeviceForBoard = function(name) {
+        var device = _.first(_.filter($scope.deviceTypes, {name : name}));
+        $scope.selectedBoard.device = name;
+        $scope.selectedBoard.device_width = device.width;
+        $scope.selectedBoard.device_height = device.height;
+        if ($scope.selectedBoard.portrait) {
+            $scope.selectedBoard.width = device.height;
+            $scope.selectedBoard.height = device.width;
+        } else {
+            $scope.selectedBoard.width = device.width;
+            $scope.selectedBoard.height = device.height;
+        }
+        $scope.selectedBoard.customizable = device.customizable;
+
         refreshPages();
-    });
+    };
 
     $scope.$watch("selectedBoard.portrait", function(ni, oi) {
         if (ni != oi) {
             //swap the width and height
-            var w = $scope.selectedBoard.width;
-            $scope.selectedBoard.width = $scope.selectedBoard.height;
-            $scope.selectedBoard.height = w;
+            if ($scope.selectedBoard.portrait) {
+                $scope.selectedBoard.width = $scope.selectedBoard.device_height;
+                $scope.selectedBoard.height = $scope.selectedBoard.device_width;
+            } else {
+                $scope.selectedBoard.width = $scope.selectedBoard.device_width;
+                $scope.selectedBoard.height = $scope.selectedBoard.device_height;
+            }
             refreshPages();
         }
     });
+
     $scope.$watch("selectedBoard.height", function(ni, oi) {
         if (ni != oi) {
+            if ($scope.selectedBoard.device === 'Custom') {
+                if ($scope.selectedBoard.portrait) {
+                    $scope.selectedBoard.device_height =  $scope.selectedBoard.width;
+                } else {
+                    $scope.selectedBoard.device_height =  $scope.selectedBoard.height;
+                }
+            }
+
             refreshPages();
+        }
+    });
+
+    $scope.$watch("selectedBoard.width", function(ni, oi) {
+        if (ni != oi) {
+            if ($scope.selectedBoard.device === 'Custom') {
+                if ($scope.selectedBoard.portrait) {
+                    $scope.selectedBoard.device_width =  $scope.selectedBoard.height;
+                } else {
+                    $scope.selectedBoard.device_width =  $scope.selectedBoard.width;
+                }
+            }
         }
     });
 });

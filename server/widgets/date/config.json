@@ -7,9 +7,10 @@
         "sensor.date_time_iso"
     ],
     "availableSizes": [
-        {"name": "Small", "value": {"x": 2, "y": 1}},
-        {"name": "Medium", "value": {"x": 3, "y": 1}},
-        {"name": "Large", "value": {"x": 4, "y": 1}}
+        {"name": "S", "value": {"x": 2, "y": 1}},
+        {"name": "M", "value": {"x": 3, "y": 1}},
+        {"name": "L", "value": {"x": 4, "y": 1}},
+        {"name": "XL", "value": {"x": 6, "y": 1}}
     ],
     "options": [
         {

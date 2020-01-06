@@ -1,0 +1,27 @@
+<div class="weather-forecast weather-forecast-x-{{config.size.x}} weather-forecast-y-{{config.size.y}}">
+    <div ng-repeat="day in value.attributes.forecast"  class="weather-forecast-day weather-forecast-day-{{$index}} text-center">
+        <div class="row weather-forecast-dow">
+            <div class="col-md-12">
+                {{dow(day.datetime)}}
+            </div>
+        </div>
+        <div class="row weather-forecast-conditions">
+            <div class="col-md-12">
+                <span class="wu wu-{{config.icon_color}} wu-{{iconSize}} wu-{{day.condition}}"></span>
+            </div>
+        </div>
+        <div class="row weather-forecast-temps">
+            <div class="col-md-12">
+                {{day.temperature | number:0}}/{{day.templow | number:0}}
+            </div>
+        </div>
+        <div class="row weather-forecast-precip">
+            <div class="col-md-12">
+                <span class="mdi mdi-umbrella"></span>
+                <span ng-if="day.precipProbability">{{day.precipProbability * 100 | number:0 }}%</span>
+                <span ng-if="!day.precipProbability">{{(day.precipitation | number:1) || 0 }}</span>
+            </div>
+        </div>
+       
+    </div>
+</div>

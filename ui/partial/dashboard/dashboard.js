@@ -1,12 +1,12 @@
-angular.module('hassdash').controller('DashboardCtrl',function($scope, $stateParams, dashboardService, deviceTypeService, gridSize){
+angular.module('hassdash').controller('DashboardCtrl',function($rootScope, $scope, $stateParams, dashboardService, deviceTypeService, gridSize){
     var dashname = $stateParams.id;
     $scope.hasError = false;
-
     $scope.device = {width: 320, height: 480};
     $scope.activePage = 0;
     function loadDashboard() {
         dashboardService.get(dashname).then(function(dash) {
             $scope.dash = dash;
+            $rootScope.dashbg = $scope.dash.background
             deviceTypeService.get(dash.device).then(function(device) {
                 $scope.device = device;
             }).catch(function(err) {

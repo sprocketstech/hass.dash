@@ -37,7 +37,7 @@
             col: 0
           show_label: false
           entity: weather.dark_sky
-          icon_color: black
+          icon_color: white
         - name: Weather Forecast
           plugin_module: hassdash.widget.weather_forecast
           plugin_name: Weather Forecast
@@ -49,7 +49,7 @@
             col: 13
           show_label: false
           entity: weather.dark_sky
-          icon_color: black
+          icon_color: white
     - widgets:
         - name: Clock
           plugin_module: hassdash.widget.clock
@@ -70,6 +70,7 @@
   portrait: false
   device_width: 1680
   device_height: 1050
+  background: black
 - name: New Board
   device: Sprocket DX2
   pages:

@@ -36,7 +36,7 @@
             row: 0
             col: 0
           show_label: false
-          entity: weather.dark_sky
+          entity: weather.home
           icon_color: white
         - name: Weather Forecast
           plugin_module: hassdash.widget.weather_forecast
@@ -48,7 +48,7 @@
             row: 0
             col: 13
           show_label: false
-          entity: weather.dark_sky
+          entity: weather.home
           icon_color: white
     - widgets:
         - name: Clock

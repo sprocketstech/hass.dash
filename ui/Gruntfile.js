@@ -37,6 +37,9 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    settings: {
+        dist: '../build/ui'
+    },
     connect: {
       main: {
         options: {
@@ -58,27 +61,34 @@ module.exports = function (grunt) {
     jshint: {
       main: {
         options: {
-            jshintrc: '.jshintrc'
+            jshintrc: '.jshintrc',
+            reporter: require('jshint-stylish')
         },
         src: createFolderGlobs('*.js')
       }
     },
     clean: {
       before:{
-        src:['dist','temp']
+        src:['<%= settings.dist %>','temp'],
+        options: {
+            force: true
+        }
       },
       after: {
         src:['temp']
       }
     },
     less: {
-      production: {
         options: {
+            modifyVars: {
+                wu_img_path: '"/icons/"'
+            }
         },
-        files: {
-          'temp/app.css': 'app.less'
+        production: {
+            files: {
+                'temp/app.css': 'app.less'
+            }
         }
-      }
     },
     ngtemplates: {
       main: {
@@ -93,12 +103,8 @@ module.exports = function (grunt) {
     copy: {
       main: {
         files: [
-          {src: ['img/**'], dest: 'dist/'},
-          {src: ['bower_components/font-awesome/fonts/**'], dest: 'dist/',filter:'isFile',expand:true},
-          {src: ['bower_components/bootstrap/fonts/**'], dest: 'dist/',filter:'isFile',expand:true}
-          //{src: ['bower_components/angular-ui-utils/ui-utils-ieshiv.min.js'], dest: 'dist/'},
-          //{src: ['bower_components/select2/*.png','bower_components/select2/*.gif'], dest:'dist/css/',flatten:true,expand:true},
-          //{src: ['bower_components/angular-mocks/angular-mocks.js'], dest: 'dist/'}
+            {src: ['bower_components/mdi/fonts/**'], dest: '<%= settings.dist %>/fonts/',filter:'isFile', expand:true, flatten:true},
+            {cwd: 'bower_components/weather-underground-icons/dist',src: ['icons/**'], dest: '<%= settings.dist %>/',filter:'isFile', expand:true, flatten:false}
         ]
       }
     },
@@ -121,31 +127,40 @@ module.exports = function (grunt) {
           ]
         },
         src:'index.html',
-        dest: 'dist/index.html'
+        dest: '<%= settings.dist %>/index.html'
       }
     },
     cssmin: {
       main: {
         src:['temp/app.css','<%= dom_munger.data.appcss %>'],
-        dest:'dist/app.full.min.css'
+        dest:'<%= settings.dist %>/app.full.min.css'
       }
     },
     concat: {
       main: {
         src: ['<%= dom_munger.data.appjs %>','<%= ngtemplates.main.dest %>'],
         dest: 'temp/app.full.js'
+      },
+      final: {
+        src: ['<%= settings.dist %>/app.full.min.js', 'bower_components/angular-gridster/dist/angular-gridster.min.js'],
+        dest: '<%= settings.dist %>/app.full.min.js'
       }
     },
     ngAnnotate: {
       main: {
         src:'temp/app.full.js',
-        dest: 'temp/app.full.js'
+        dest: '<%= settings.dist %>/app.full.js'
       }
     },
     uglify: {
       main: {
-        src: 'temp/app.full.js',
-        dest:'dist/app.full.min.js'
+        options: {
+            sourceMap: {
+                filename: '<%= settings.dist %>/app.full.min.js.map'
+            }
+        },
+        src: '<%= settings.dist %>/app.full.js',
+        dest:'<%= settings.dist %>/app.full.min.js'
       }
     },
     htmlmin: {
@@ -160,7 +175,7 @@ module.exports = function (grunt) {
           removeStyleLinkTypeAttributes: true
         },
         files: {
-          'dist/index.html': 'dist/index.html'
+          '<%= settings.dist %>/index.html': '<%= settings.dist %>/index.html'
         }
       }
     },
@@ -200,7 +215,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('build',[/*'jshint',*/'clean:before','less','dom_munger','ngtemplates','cssmin','concat','ngAnnotate','uglify','copy','htmlmin','clean:after']);
+  grunt.registerTask('build',['jshint','clean:before','less','dom_munger','ngtemplates','cssmin','concat:main','ngAnnotate','uglify','copy','htmlmin','clean:after']);
   grunt.registerTask('serve', ['dom_munger:read','jshint','connect', 'watch']);
   grunt.registerTask('test',['dom_munger:read','karma:all_tests']);
 

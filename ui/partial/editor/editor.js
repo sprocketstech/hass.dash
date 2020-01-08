@@ -94,8 +94,8 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
             "height": gridHeight + "px",
             "min-width": gridWidth + "px",
             "min-height": gridHeight + "px"
-        }
-    }
+        };
+    };
 
 
 
@@ -128,7 +128,7 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
     };
 
     $scope.$watch("selectedBoard.portrait", function(ni, oi) {
-        if (ni != oi) {
+        if (ni !== oi) {
             //swap the width and height
             if ($scope.selectedBoard.portrait) {
                 $scope.selectedBoard.width = $scope.selectedBoard.device_height;
@@ -142,7 +142,7 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
     });
 
     $scope.$watch("selectedBoard.height", function(ni, oi) {
-        if (ni != oi) {
+        if (ni !== oi) {
             if ($scope.selectedBoard.device === 'Custom') {
                 if ($scope.selectedBoard.portrait) {
                     $scope.selectedBoard.device_height =  $scope.selectedBoard.width;
@@ -156,7 +156,7 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
     });
 
     $scope.$watch("selectedBoard.width", function(ni, oi) {
-        if (ni != oi) {
+        if (ni !== oi) {
             if ($scope.selectedBoard.device === 'Custom') {
                 if ($scope.selectedBoard.portrait) {
                     $scope.selectedBoard.device_width =  $scope.selectedBoard.height;

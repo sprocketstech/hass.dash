@@ -4,7 +4,7 @@ module.exports = function(argv) {
     var config = {
         log_level: 'debug',
         html_root: __dirname + '/../ui/',
-        web_port: 8099,
+        web_port: 9044,
         widget_directory: __dirname + '/widgets',
         devices_directory: __dirname + '/devices',
         dashboards: __dirname + '/dashboards.yaml',

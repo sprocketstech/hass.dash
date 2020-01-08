@@ -8,7 +8,7 @@ angular.module('hassdash').factory('deviceTypeService',function($http, $q) {
         if (deviceTypeService.cachedDevices.length === 0) {
             $http({
                 method: 'GET',
-                url: '/api/devices'
+                url: 'api/devices'
             }).success(function(response){
                 //cache the result
                 deviceTypeService.cachedDevices = response;

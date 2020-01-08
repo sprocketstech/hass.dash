@@ -6,7 +6,7 @@ angular.module('hassdash').factory('dashboardService', function($http, $q, _, cl
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: '/api/dashboards'
+            url: 'api/dashboards'
         }).success(function(response){
             deferred.resolve(response);
         }).error(function(error){
@@ -34,7 +34,7 @@ angular.module('hassdash').factory('dashboardService', function($http, $q, _, cl
         var deferred = $q.defer();
         $http({
             method: 'POST',
-            url: '/api/dashboards',
+            url: 'api/dashboards',
             data: obj
         }).success(function(response){
             deferred.resolve(response);
@@ -53,7 +53,7 @@ angular.module('hassdash').factory('dashboardService', function($http, $q, _, cl
         scope.$on('$destroy', function() {
             unbind();
         });
-    }
+    };
 
 
     return dashboardService;

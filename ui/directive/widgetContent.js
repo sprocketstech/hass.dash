@@ -1,4 +1,6 @@
 angular.module('hassdash').directive('widgetContent', function($log, widgetService, entityService, $compile, $controller, gridSize) {
+
+
     var errorTemplate = '<div class="alert alert-danger">##</div>';
     var loadingTemplate = '\
       <div class="progress progress-striped active">\n\
@@ -6,19 +8,6 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
           <span class="sr-only">loading ...</span>\n\
         </div>\n\
       </div>';
-
-    return {
-        replace: true,
-        restrict: 'E',
-        transclude: true,
-        template: '<div></div>',
-        scope: {
-            type: '=',
-            config: '=',
-            value: '='
-        },
-        link: link
-    };
 
 
     function renderError(element, msg){
@@ -45,7 +34,7 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
     function compileWidget(scope, element, content, controller, currentScope) {
 
         if (!scope.config){
-            renderError(element, 'config is undefined')
+            renderError(element, 'config is undefined');
             return;
         } else if (!content){
             var msg = 'widget content is undefined, please have a look at your browser log';
@@ -96,8 +85,8 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
         }
         //if any js defined, add it to the load list
         if (scope.type.hasOwnProperty('templateJs')) {
-            for (var i=0; i < scope.type.templateJs.length; ++i) {
-                toLoad.push({type: "js", url: scope.type.templateJs[i]});
+            for (var j=0; j < scope.type.templateJs.length; ++j) {
+                toLoad.push({type: "js", url: scope.type.templateJs[j]});
             }
         }
 
@@ -121,4 +110,19 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
         element.width(scope.config.size.x * 48 + 'px');
         element.height(scope.config.size.y * 48 + 'px');
     }
+
+
+    return {
+        replace: true,
+        restrict: 'E',
+        transclude: true,
+        template: '<div></div>',
+        scope: {
+            type: '=',
+            config: '=',
+            value: '='
+        },
+        link: link
+    };
+
 });

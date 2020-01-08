@@ -6,7 +6,7 @@ angular.module('hassdash').controller('TestwidgetCtrl',function($scope, $window,
     $scope.$watch('testValue', function(ni, oi) {
         if ($scope.testValue != null) {
             $scope.value = JSON.parse($scope.testValue);
-            $window.localStorage.setItem('test_widget_value', $scope.testValue)
+            $window.localStorage.setItem('test_widget_value', $scope.testValue);
         }
     });
 
@@ -21,5 +21,5 @@ angular.module('hassdash').controller('TestwidgetCtrl',function($scope, $window,
 
     $scope.typeOfItem = function(item) {
         return widgetService.get(item.plugin_module, item.plugin_name);
-    }
+    };
 });

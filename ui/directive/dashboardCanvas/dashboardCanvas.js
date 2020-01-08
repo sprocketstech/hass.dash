@@ -52,7 +52,7 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
 
             scope.typeOfItem = function(item) {
                 return widgetService.get(item.plugin_module, item.plugin_name);
-            }
+            };
 
             scope.hoverIn = function(item) {
                 item.$element.find('.widget-content-overlay').css('display', 'block');
@@ -62,7 +62,7 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
             };
 
             scope.remove = function(item) {
-                scope.items = _.remove(scope.items, function(o) { return o != item; });
+                scope.items = _.remove(scope.items, function(o) { return o !== item; });
             };
 
             scope.edit = function(item) {

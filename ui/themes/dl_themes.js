@@ -1,3 +1,4 @@
+/* jshint ignore:start*/
 "use strict";
 
 var https = require('https');
@@ -63,3 +64,4 @@ var closeOut = function() {
     }
  })();
 
+/* jshint ignore:end*/

@@ -25,5 +25,12 @@
     "socketio-wildcard": "*",
     "socket.io-client": "*"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-includes": "*",
+    "load-grunt-tasks": "*",
+    "grunt-grunt": "*"
+  }
 }

@@ -1,6 +1,6 @@
 angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyLoad, _) {
 
-    var templateCache = {}
+    var templateCache = {};
     var widgetService = {};
     widgetService.cachedWidgets = [];
 
@@ -10,10 +10,10 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
         var htmlUrl = "";
         //TODO: At some point the URL should be configurable
         angular.forEach(urls, function(url) {
-            if (url.type == "html") {
-                htmlUrl = "/widgets/" + url.url;
+            if (url.type === "html") {
+                htmlUrl = "widgets/" + url.url;
             } else {
-                toLoad.push("/widgets/" + url.url);
+                toLoad.push("widgets/" + url.url);
             }
 
         });
@@ -46,7 +46,7 @@ angular.module('hassdash').factory('widgetService', function($q, $http, $ocLazyL
         if (widgetService.cachedWidgets.length === 0) {
             $http({
                 method: 'GET',
-                url: '/api/widgets'
+                url: 'api/widgets'
             }).success(function(response){
                 //cache the result
                 widgetService.cachedWidgets = response;

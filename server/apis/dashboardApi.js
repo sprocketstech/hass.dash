@@ -7,9 +7,13 @@ var svc = {
     dashboardStore: ''
 };
 function loadDashboards() {
-    if (fs.statSync(svc.dashboardStore)) {
-        const fc = fs.readFileSync(svc.dashboardStore, 'utf8');
-        svc.dashboards = YAML.parse(fc);
+    try {
+        if (fs.statSync(svc.dashboardStore)) {
+            const fc = fs.readFileSync(svc.dashboardStore, 'utf8');
+            svc.dashboards = YAML.parse(fc);
+        }
+    } catch (err) {
+
     }
 }
 

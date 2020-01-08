@@ -4,7 +4,7 @@
         <span class="current-temperature">{{value.attributes.temperature | number:0}}</span>    
     </div>
     <div class="current-weather-forecast">
-        <div>H: {{value.attributes.forecast[0].temperature}}</div>
-        <div>L: {{value.attributes.forecast[0].templow}}</div>
+        <div>H: {{value.attributes.forecast[0].temperature | number:0}}</div>
+        <div>L: {{value.attributes.forecast[0].templow | number:0}}</div>
     </div>
 </div>

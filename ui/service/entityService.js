@@ -10,7 +10,7 @@ angular.module('hassdash').factory('entityService',function($http, $q, _, client
         } else {
             $http({
                 method: 'GET',
-                url: '/api/entities'
+                url: 'api/entities'
             }).success(function(response){
                 entityService.entities = response;
                 deferred.resolve(entityService.entities);
@@ -39,10 +39,10 @@ angular.module('hassdash').factory('entityService',function($http, $q, _, client
             });
             deferred.resolve(filtered);
         }).catch(function (err) {
-            deferred.reject({message: error});
+            deferred.reject({message: err});
         });
         return deferred.promise;
-    }
+    };
 
     entityService.getEntity = function(entity_id) {
         var deferred = $q.defer();
@@ -60,11 +60,11 @@ angular.module('hassdash').factory('entityService',function($http, $q, _, client
             }
 
         }).catch(function (err) {
-            deferred.reject({message: error});
+            deferred.reject({message: err});
         });
 
         return deferred.promise;
-    }
+    };
 
 
     entityService.onStateChange = function(scope, callback) {
@@ -75,7 +75,7 @@ angular.module('hassdash').factory('entityService',function($http, $q, _, client
         scope.$on('$destroy', function() {
             unbind();
         });
-    }
+    };
 
     return entityService;
 });

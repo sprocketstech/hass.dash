@@ -20,7 +20,7 @@ angular.module('hassdash').directive('dashboardViewer', function(gridSize, widge
                 isMobile: false,
                 mobileModeEnabled: false,
                 columns: Math.floor(scope.width / gridSize), // the width of the grid, in columns
-                pushing: false,
+                pushing: true,
                 floating: false,
                 swapping: false,
                 width: scope.width,
@@ -49,8 +49,18 @@ angular.module('hassdash').directive('dashboardViewer', function(gridSize, widge
 
             scope.typeOfItem = function(item) {
                 return widgetService.get(item.plugin_module, item.plugin_name);
-            }
+            };
 
+
+
+            scope.$watch('width', function() {
+                scope.gridsterOpts.columns = Math.floor(scope.width / gridSize);
+                scope.gridsterOpts.minColumns = Math.floor(scope.width / gridSize);
+            });
+            scope.$watch('height', function() {
+                scope.gridsterOpts.minRows = Math.floor(scope.height / gridSize);
+                scope.gridsterOpts.maxRows = Math.floor(scope.height / gridSize);
+            });
 
         }
     };

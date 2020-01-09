@@ -6,7 +6,7 @@ angular.module('hassdash.widget.weather_forecast').controller('weatherForecastCo
 
     $scope.iconSize = 32;
     if ($scope.config.size.y === 4) {
-        $scope.iconSize = 48;
+        $scope.iconSize = 64;
     }
 
     $scope.dow = function(dt) {
@@ -20,7 +20,7 @@ angular.module('hassdash.widget.weather_forecast').controller('weatherForecastEd
 
     $scope.iconSize = 32;
     if ($scope.config.size.y === 4) {
-        $scope.iconSize = 48;
+        $scope.iconSize = 64;
     }
 
     $scope.dow = function(dt) {

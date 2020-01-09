@@ -12,16 +12,13 @@
         </div>
         <div class="row weather-forecast-temps">
             <div class="col-md-12">
-                {{day.temperature | number:0}}/{{day.templow | number:0}}
+                H: {{day.temperature | number:0}}
             </div>
         </div>
-        <div class="row weather-forecast-precip">
+        <div class="row weather-forecast-temps">
             <div class="col-md-12">
-                <span class="mdi mdi-umbrella"></span>
-                <span ng-if="day.precipProbability">{{day.precipProbability * 100 | number:0 }}%</span>
-                <span ng-if="!day.precipProbability">{{(day.precipitation | number:1) || 0 }}</span>
+                L: {{day.templow | number:0}}
             </div>
         </div>
-       
     </div>
 </div>

@@ -1,6 +1,6 @@
 {
   "name": "Hass.Dash",
-  "version": "5",
+  "version": "3",
   "slug": "hass_dash",
   "description": "Dashboard creation for home assistant",
   "ingress": true,

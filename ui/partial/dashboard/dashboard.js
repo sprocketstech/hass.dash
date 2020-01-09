@@ -25,8 +25,14 @@ angular.module('hassdash').controller('DashboardCtrl',function($rootScope, $scop
 
 
     $scope.dashStyle = function() {
-        var gridWidth = Math.floor($scope.dash.width/gridSize) * gridSize;
-        var gridHeight = Math.floor($scope.dash.height/gridSize) * gridSize;
+        var gridWidth = 320;
+        var gridHeight = 240;
+
+        if ($scope.dash) {
+            gridWidth = Math.floor($scope.dash.width/gridSize) * gridSize;
+            gridHeight = Math.floor($scope.dash.height/gridSize) * gridSize;
+
+        }
 
         return {
             "width": gridWidth + "px",

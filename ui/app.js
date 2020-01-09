@@ -42,13 +42,11 @@ angular.module('hassdash').run(function($rootScope, widgetService, entityService
 
 });
 angular.module('hassdash').factory('clientUpdates', function (baseURL, socketFactory) {
-    var ioSocket = io({
-        path: baseURL + '/socket.io/'
-    });
-    var socket = socketFactory({
-        ioSocket: ioSocket
+    /*var socket = socketFactory({
+        ioSocket: io(baseURL)
       });
-    return socket;
+    return socket;*/
+    return socketFactory();
 });
 
 angular.module('hassdash').factory('baseURL', function() {

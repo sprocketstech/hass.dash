@@ -38,7 +38,7 @@ module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     settings: {
-        dist: '../build/ui'
+        dist: '../build/hassio/app/ui'
     },
     connect: {
       main: {

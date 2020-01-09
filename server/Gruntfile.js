@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     
     grunt.initConfig({
         settings: {
-            dist: '../build/server'
+            dist: '../build/hassio/app/server'
         },
 		copy: {
 		  main: {

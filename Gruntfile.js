@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     
     grunt.initConfig({
         settings: {
-            dist: './build/',
+            dist: './build/hassio',
 			ui: './ui',
             server: './server',
             hassio: './hass.io'
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         copy: {
             hass: {
               files: [
-                  {src: ['hass.io/**'], dest: '<%= settings.dist %>/',filter:'isFile', expand:true, flatten:true}
+                  {cwd: 'hass.io/', src: ['./**'], dest: '<%= settings.dist %>/',filter:'isFile', expand:true, flatten:false}
               ]
             }
           },
@@ -40,9 +40,9 @@ module.exports = function(grunt) {
         var config = {
             dashboards: '/data/dashboards.yaml',
             hass_url: 'http://hassio/homeassistant/api',
-            hass_llat: '${HASSIO_TOKEN}'
+            hass_llat: '$HASSIO_TOKEN'
         };
-        fs.writeFileSync('build/server/config.json', JSON.stringify(config, null, 2));
+        fs.writeFileSync('build/hassio/app/server/config.json', JSON.stringify(config, null, 2));
     });
 
 

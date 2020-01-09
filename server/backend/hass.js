@@ -50,7 +50,7 @@ hass_svc._logError = function(error) {
 
 hass_svc._loadConfig = function() {
     hass_svc.logger.info("Loading config from " + hass_svc.url);
-    axios.get(hass_svc.url + "config")
+    axios.get(hass_svc.url + "/config")
         .then(response => {
             hass_svc.info = {
                 elevation: response.data.elevation,
@@ -72,7 +72,7 @@ hass_svc._loadConfig = function() {
 
 hass_svc._loadEvents = function() {
     hass_svc.logger.debug("Loading events from " + hass_svc.url);
-    axios.get(hass_svc.url + "events")
+    axios.get(hass_svc.url + "/events")
         .then(response => {
             hass_svc.events = [];
             for (var i=0; i < response.data.length; ++i) {
@@ -86,7 +86,7 @@ hass_svc._loadEvents = function() {
 
 hass_svc._loadStates = function() {
     hass_svc.logger.debug("Loading states from " + hass_svc.url);
-    axios.get(hass_svc.url + "states")
+    axios.get(hass_svc.url + "/states")
         .then(response => {
             for (var i=0; i < response.data.length; ++i) {
                 hass_svc.states[response.data[i].entity_id] = {
@@ -108,7 +108,7 @@ hass_svc._publishStateChange = function(state) {
 
 hass_svc._loadState = function(id) {
     hass_svc.logger.debug("Loading state " + id + " from " + hass_svc.url);
-    axios.get(hass_svc.url + "states/" + id)
+    axios.get(hass_svc.url + "/states/" + id)
         .then(response => {
             hass_svc.states[id].friendly_name = response.data.friendly_name || response.data.attributes.friendly_name || id;
             hass_svc.states[id].icon = response.data.attributes.icon || 'mdi:crosshairs-question';
@@ -122,7 +122,7 @@ hass_svc._loadState = function(id) {
 
 hass_svc._subscribeToStates = function() {
     var eventSourceInitDict = {headers: {'Authorization': 'Bearer ' + hass_svc.token}};
-    hass_svc.updates = new es(hass_svc.url + "stream", eventSourceInitDict);
+    hass_svc.updates = new es(hass_svc.url + "/stream", eventSourceInitDict);
     hass_svc.updates.onmessage = function(event) {
         try {
             var dt = JSON.parse(event.data);
@@ -159,7 +159,7 @@ hass_svc._subscribeToStates = function() {
 
 hass_svc._load = function() {
     hass_svc.logger.info("Checking hass at " + hass_svc.url);
-    axios.get(hass_svc.url)
+    axios.get(hass_svc.url + '/')
         .then(response => {
             if (response.data.message) {
                 hass_svc.logger.debug("HASS API at " + hass_svc.url + " responds: " + response.data.message);

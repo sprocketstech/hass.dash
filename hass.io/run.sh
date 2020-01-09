@@ -1,6 +1,7 @@
 
-(cd server;npm install --production)
+mkdir /run/nginx
+nginx
 
-#(cd ui;bower --allow-root install)
-
+(cd /opt/hass.dash/server;npm install --production)
+cd /opt/hass.dash
 node server/index.js

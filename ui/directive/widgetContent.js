@@ -50,7 +50,8 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
         //provide the config and value to the scope
         widgetScope.config = scope.config;
         widgetScope.value = scope.value;
-
+        widgetScope.foregroundColor = scope.foreground;
+        widgetScope.backgroundColor = scope.background;
         //create the controller
         var widgetCtrl = $controller(controller, {$scope: widgetScope});
         el.children().data('$ngControllerController', widgetCtrl);
@@ -67,7 +68,9 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
         currentScope = widgetScope;
 
         //start the value updater
-        monitorEntity(widgetScope);
+        if (!scope.editable) {
+            monitorEntity(widgetScope);
+        }
 
         return currentScope;
     }
@@ -89,18 +92,21 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
                 toLoad.push({type: "js", url: scope.type.templateJs[j]});
             }
         }
-
+        var controller = scope.editable ? scope.type.editController : scope.type.controller;
+        if (!controller) {
+            controller = scope.type.controller;
+        }
         //load the widget HTML and dependencies
         widgetService.load(toLoad).then(function(templateHtml) {
             //wrap the widget in a div so that the module is resolved correctly
             var widgetHTML = '<div ng-app="' + scope.type.module + '">' + templateHtml + '</div>';
 
-            var currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, null);
+            var currentScope = compileWidget(scope, element, widgetHTML, controller, null);
 
             scope.$on('widgetConfigChanged', function() {
                 element.width(scope.config.size.x * gridSize + 'px');
                 element.height(scope.config.size.y * gridSize + 'px');
-                currentScope = compileWidget(scope, element, widgetHTML, scope.type.controller, currentScope);
+                currentScope = compileWidget(scope, element, widgetHTML, controller, currentScope);
             });
 
         }).catch(function (err) {
@@ -120,7 +126,10 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
         scope: {
             type: '=',
             config: '=',
-            value: '='
+            value: '=',
+            foreground: '=',
+            background: '=',
+            editable: '@'
         },
         link: link
     };

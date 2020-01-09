@@ -1,14 +1,8 @@
 angular.module('hassdash').controller('TestwidgetCtrl',function($scope, $window, $timeout, widgetService){
-    $scope.testValue = $window.localStorage.getItem('test_widget_value');
-    $scope.value = JSON.parse($scope.testValue);
     $scope.testItem = $window.localStorage.getItem('test_widget_item');
     $scope.item = JSON.parse($scope.testItem);
-    $scope.$watch('testValue', function(ni, oi) {
-        if ($scope.testValue != null) {
-            $scope.value = JSON.parse($scope.testValue);
-            $window.localStorage.setItem('test_widget_value', $scope.testValue);
-        }
-    });
+    $scope.foreground = 'black';
+    $scope.background = 'white';
 
     $scope.$watch('testItem', function(ni, oi) {
         if ($scope.testItem != null) {

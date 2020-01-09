@@ -1,4 +1,4 @@
-<div class="border-success dashboard-canvas">
+<div class="border-success dashboard-canvas dashboard-bg-{{background}}">
     <div gridster="gridsterOpts">
         <ul>
             <li gridster-item="customItemMap"
@@ -9,7 +9,7 @@
                         <a class="button button-clear" ng-click="edit(item)"><i class="mdi mdi-pencil"></i></a>
                         <a class="button button-clear" ng-click="remove(item)"><i class="mdi mdi-delete"></i></a>
                     </div>
-                    <widget-content type="typeOfItem(item)" config="item" editable="true">
+                    <widget-content type="typeOfItem(item)" config="item" editable="true"  foreground='foreground' background='background'>
                     </widget-content>
                 </div>
             </li>

@@ -29,7 +29,6 @@
     "angular-gridster": "*",
     "mdi": "*",
     "angular-socket-io": "*",
-    "socket.io-client": "*",
-    "weather-underground-icons": "*"
+    "socket.io-client": "*"
   }
 }

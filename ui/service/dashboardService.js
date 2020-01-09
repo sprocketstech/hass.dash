@@ -46,7 +46,7 @@ angular.module('hassdash').factory('dashboardService', function($http, $q, _, cl
 
 
     dashboardService.onDashboardsUpdated = function(scope, callback) {
-        clientUpdates.forward('dashboards.changed', scope);
+        clientUpdates().forward('dashboards.changed', scope);
         var unbind = scope.$on('socket:dashboards.changed', function(event, data) {
             callback(data);
         });

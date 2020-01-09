@@ -2,19 +2,125 @@
 angular.module('hassdash.widget.weather_conditions', ['hassdash']);
 
 
-angular.module('hassdash.widget.weather_conditions').controller('weatherConditionsController', function($scope) {
-    $scope.iconSize = 48;
-    if ($scope.config.size.y === 1) {
-        $scope.iconSize = 22;
-        if ($scope.config.size.x === 2) {
-            $scope.iconSize = 48;
+angular.module('hassdash.widget.weather_conditions').service('weatherConditionsSvc', function() {
+    var svc = {};
+    svc.determineIconSize = function(config) {
+        var iconSize = 48;
+        if (config.size.y === 1) {
+            iconSize = 22;
+            if (config.size.x === 2) {
+                iconSize = 48;
+            }
+            if (config.size.x === 3) {
+                iconSize = 48;
+            }
+        } else if (config.size.y === 2) {
+            iconSize = 96;
+        } else if (config.size.y === 3) {
+            iconSize = 144;
         }
-        if ($scope.config.size.x === 3) {
-            $scope.iconSize = 48;
-        }
-    } else if ($scope.config.size.y === 2) {
-        $scope.iconSize = 96;
-    } else if ($scope.config.size.y === 3) {
-        $scope.iconSize = 144;
-    }
+        return iconSize;
+    };
+
+    return svc;
+});
+
+angular.module('hassdash.widget.weather_conditions').controller('weatherConditionsController', function($scope, weatherConditionsSvc) {
+    $scope.iconSize = weatherConditionsSvc.determineIconSize($scope.config);
+});
+
+angular.module('hassdash.widget.weather_conditions').controller('weatherConditionsEditController', function($scope, weatherConditionsSvc) {
+    $scope.iconSize = weatherConditionsSvc.determineIconSize($scope.config);
+    $scope.value = 
+    { 
+       "entity_id":"weather.dark_sky",
+       "state":"cloudy",
+       "friendly_name":"Dark Sky",
+       "icon":"mdi:crosshairs-question",
+       "attributes":{ 
+          "temperature":58,
+          "humidity":79,
+          "ozone":276.7,
+          "pressure":29.6,
+          "wind_bearing":220,
+          "wind_speed":6.38,
+          "visibility":10,
+          "attribution":"Powered by Dark Sky",
+          "forecast":[ 
+             { 
+                "datetime":"2020-01-04T05:00:00+00:00",
+                "temperature":59,
+                "templow":33,
+                "precipitation":0.2,
+                "wind_speed":7.39,
+                "wind_bearing":297,
+                "condition":"rainy"
+             },
+             { 
+                "datetime":"2020-01-05T05:00:00+00:00",
+                "temperature":44,
+                "templow":31,
+                "precipitation":null,
+                "wind_speed":12.34,
+                "wind_bearing":301,
+                "condition":"sunny"
+             },
+             { 
+                "datetime":"2020-01-06T05:00:00+00:00",
+                "temperature":47,
+                "templow":26,
+                "precipitation":null,
+                "wind_speed":8.17,
+                "wind_bearing":266,
+                "condition":"sunny"
+             },
+             { 
+                "datetime":"2020-01-07T05:00:00+00:00",
+                "temperature":38,
+                "templow":31,
+                "precipitation":0.3,
+                "wind_speed":6.86,
+                "wind_bearing":204,
+                "condition":"rainy"
+             },
+             { 
+                "datetime":"2020-01-08T05:00:00+00:00",
+                "temperature":34,
+                "templow":17,
+                "precipitation":null,
+                "wind_speed":15.72,
+                "wind_bearing":289,
+                "condition":"windy"
+             },
+             { 
+                "datetime":"2020-01-09T05:00:00+00:00",
+                "temperature":42,
+                "templow":34,
+                "precipitation":null,
+                "wind_speed":5.35,
+                "wind_bearing":244,
+                "condition":"partlycloudy"
+             },
+             { 
+                "datetime":"2020-01-10T05:00:00+00:00",
+                "temperature":55,
+                "templow":51,
+                "precipitation":null,
+                "wind_speed":8.03,
+                "wind_bearing":200,
+                "condition":"cloudy"
+             },
+             { 
+                "datetime":"2020-01-11T05:00:00+00:00",
+                "temperature":67,
+                "templow":47,
+                "precipitation":0.7,
+                "wind_speed":10.76,
+                "wind_bearing":197,
+                "condition":"rainy"
+             }
+          ],
+          "friendly_name":"Dark Sky"
+       }
+    };
 });

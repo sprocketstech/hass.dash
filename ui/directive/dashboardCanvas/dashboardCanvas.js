@@ -6,6 +6,8 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
             items: '=',
             width: '=',
             height: '=',
+            foreground: '=',
+            background: '=',
             onEdit: '&'
         },
         templateUrl: 'directive/dashboardCanvas/dashboardCanvas.html',
@@ -96,6 +98,11 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
                         scope.items[i].position.row = 0;
                     }
                 }
+            });
+            scope.$watch('background', function() {
+                $timeout(function() {
+                    scope.$broadcast('widgetConfigChanged');
+                },1);
             });
 
         }

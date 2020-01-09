@@ -10,8 +10,8 @@ var findPlugins = function(dir) {
     files.forEach(function(file) {
         if (fs.statSync(dir + '/' + file).isDirectory()) {
             //look for a config.json file
-            if (fs.statSync(dir + '/' + file + '/config.json')) {
-                ret.push(require(dir + '/' + file + '/config.json'));
+            if (fs.statSync(dir + '/' + file + '/widget.json')) {
+                ret.push(require(dir + '/' + file + '/widget.json'));
             }
         }
     });

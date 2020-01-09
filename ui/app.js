@@ -46,7 +46,10 @@ angular.module('hassdash').factory('clientUpdates', function (baseURL, socketFac
         ioSocket: io(baseURL)
       });
     return socket;*/
-    return socketFactory();
+    return function() {
+        return socketFactory();
+    }
+
 });
 
 angular.module('hassdash').factory('baseURL', function() {

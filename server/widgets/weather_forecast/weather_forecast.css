@@ -124,3 +124,51 @@
     display: block;
 }
 
+
+
+.wu-black.wu-rainy { background: url(icons/black/svg/rain.svg); }
+.wu-black.wu-pouring { background: url(icons/black/svg/rain.svg); }
+.wu-black.wu-windy { background: url(icons/black/svg/hazy.svg); }
+.wu-black.wu-windy-variant { background: url(icons/black/svg/hazy.svg); }
+.wu-black.wu-snowy { background: url(icons/black/svg/snow.svg); }
+.wu-black.wu-snowy-rainy { background: url(icons/black/svg/snow.svg); }
+.wu-black.wu-clear-night { background: url(icons/black/svg/clear.svg); }
+.wu-black.wu-lightning { background: url(icons/black/svg/tstorms.svg); }
+.wu-black.wu-lightning-rainy { background: url(icons/black/svg/tstorms.svg); }
+.wu-black.wu-cloudy { background: url(icons/black/svg/cloudy.svg); }
+.wu-black.wu-fog { background: url(icons/black/svg/fog.svg); }
+.wu-black.wu-hail { background: url(icons/black/svg/sleet.svg); }
+.wu-black.wu-partlycloudy { background: url(icons/black/svg/partlycloudy.svg); }
+.wu-black.wu-sunny { background: url(icons/black/svg/sunny.svg); }
+
+.wu-white.wu-rainy { background: url(icons/white/svg/rain.svg); }
+.wu-white.wu-pouring { background: url(icons/white/svg/rain.svg); }
+.wu-white.wu-windy { background: url(icons/white/svg/hazy.svg); }
+.wu-white.wu-windy-variant { background: url(icons/white/svg/hazy.svg); }
+.wu-white.wu-snowy { background: url(icons/white/svg/snow.svg); }
+.wu-white.wu-snowy-rainy { background: url(icons/white/svg/snow.svg); }
+.wu-white.wu-clear-night { background: url(icons/white/svg/clear.svg); }
+.wu-white.wu-lightning { background: url(icons/white/svg/tstorms.svg); }
+.wu-white.wu-lightning-rainy { background: url(icons/white/svg/tstorms.svg); }
+.wu-white.wu-cloudy { background: url(icons/white/svg/cloudy.svg); }
+.wu-white.wu-fog { background: url(icons/white/svg/fog.svg); }
+.wu-white.wu-hail { background: url(icons/white/svg/sleet.svg); }
+.wu-white.wu-partlycloudy { background: url(icons/white/svg/partlycloudy.svg); }
+.wu-white.wu-sunny { background: url(icons/white/svg/sunny.svg); }
+
+.wu {
+    display: inline-block;
+    background-repeat: no-repeat;
+    padding: 0;
+    margin: 0;
+}
+.wu-16 { width: 16px; height: 16px; }
+.wu-22 { width: 22px; height: 22px; }
+.wu-32 { width: 32px; height: 32px; }
+.wu-48 { width: 48px; height: 48px; }
+.wu-64 { width: 64px; height: 64px; }
+.wu-96 { width: 96px; height: 96px; }
+.wu-128 { width: 128px; height: 128px; }
+.wu-144 { width: 144px; height: 144px; }
+.wu-256 { width: 256px; height: 256px; }
+

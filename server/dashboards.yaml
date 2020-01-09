@@ -9,8 +9,8 @@
             x: 6
             y: 2
           position:
-            row: 4
-            col: 18
+            row: 0
+            col: 28
           show_label: false
           entity: sensor.date_time_iso
           time_format: h:mm A
@@ -64,13 +64,15 @@
           time_format: HH:mm:ss
           entity: sensor.date_time_iso
     - widgets: []
+    - widgets: []
   width: 1680
   height: 1050
   customizable: true
   portrait: false
   device_width: 1680
   device_height: 1050
-  background: black
+  background: white
+  foreground: black
 - name: New Board
   device: Sprocket DX2
   pages:

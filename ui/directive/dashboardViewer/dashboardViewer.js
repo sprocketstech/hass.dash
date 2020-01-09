@@ -5,7 +5,9 @@ angular.module('hassdash').directive('dashboardViewer', function(gridSize, widge
         scope: {
             items: '=',
             width: '=',
-            height: '='
+            height: '=',
+            foreground: '=',
+            background: '='
         },
         templateUrl: 'directive/dashboardViewer/dashboardViewer.html',
         link: function(scope, element, attrs, fn) {

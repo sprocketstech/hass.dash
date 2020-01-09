@@ -1,6 +1,9 @@
 angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal, $timeout, $q, gridSize, dashboardService, deviceTypeService, widgetService) {
     $scope.deviceCustomizable = false;
 
+    $scope.foreground = 'black';
+    $scope.background = 'white';
+
     dashboardService.getAll().then(function(res) {
         $scope.boards = res;
         $scope.selectedBoard = $scope.boards[0];
@@ -127,6 +130,12 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
         refreshPages();
     };
 
+    $scope.$watch("selectedBoard.background", function(ni, oi) {
+        if ($scope.selectedBoard) {
+            $scope.selectedBoard.foreground = $scope.selectedBoard.background === 'white' ? 'black' : 'white';
+        }
+    });
+
     $scope.$watch("selectedBoard.portrait", function(ni, oi) {
         if (ni !== oi) {
             //swap the width and height
@@ -171,6 +180,8 @@ angular.module('hassdash').controller('EditorCtrl',function($scope, _, $uibModal
 angular.module('hassdash').controller('EditWidgetCtrl', function ($scope, $uibModalInstance, items, entityService) {
     var $ctrl = this;
     $ctrl.type = items.type;
+    $scope.foreground = 'black';
+    $scope.background = 'white';
     if (items.item) {
         $ctrl.model = items.item;
         $ctrl.isNew = false;

@@ -68,7 +68,7 @@ angular.module('hassdash').factory('entityService',function($http, $q, _, client
 
 
     entityService.onStateChange = function(scope, callback) {
-        clientUpdates.forward('entity.changed', scope);
+        clientUpdates().forward('entity.changed', scope);
         var unbind = scope.$on('socket:entity.changed', function(event, data) {
             callback(data);
         });

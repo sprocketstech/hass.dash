@@ -10,7 +10,7 @@
     </nav>
     <div class="row mb-3">
         <div class="col-md-12">
-            <div class="form-inline">
+            <div class="form-inline justify-content-center">
                 <div class="form-group mr-3">
                     <label class="mr-3">Name: </label>
                     <input class="form-control" type="text" ng-model="selectedBoard.name">
@@ -98,10 +98,10 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" ng-show="$ctrl.type.num_entities === 'one'">
                             <label class="col-sm-2 col-form-label">Entity: </label>
                             <div class="col-sm-10">
-                                <select class="form-control" ng-model="$ctrl.model.entity" ng-options="entity.entity_id as entity.friendly_name for entity in $ctrl.entities"></select>
+                                <select class="form-control" ng-model="$ctrl.model.entities[0]" ng-options="entity.entity_id as entity.friendly_name for entity in $ctrl.entities"></select>
                             </div>
                         </div>
                         <div class="form-group row">

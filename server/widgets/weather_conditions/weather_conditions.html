@@ -5,6 +5,6 @@
     </div>
     <div class="current-weather-forecast">
         <div>H: {{value.attributes.forecast[0].temperature | number:0}}</div>
-        <div>L: {{value.attributes.forecast[0].templow | number:0}}</div>
+        <div ng-if="value.attributes.forecast[0].templow">L: {{value.attributes.forecast[0].templow | number:0}}</div>
     </div>
 </div>

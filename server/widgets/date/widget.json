@@ -3,8 +3,8 @@
     "module": "hassdash.widget.date",
     "controller": "dateController",
     "show_label": false,
+    "num_entities": "none",
     "entity_filter": [
-        "sensor.date_time_iso"
     ],
     "availableSizes": [
         {"name": "S", "value": {"x": 2, "y": 1}},

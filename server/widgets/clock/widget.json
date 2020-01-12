@@ -4,8 +4,8 @@
     "controller": "clockController",
     "editController": "clockEditController",
     "show_label": false,
+    "num_entities": "none",
     "entity_filter": [
-        "sensor.date_time_iso"
     ],
     "availableSizes": [
         {"name": "XS", "value": {"x": 1, "y": 1}},

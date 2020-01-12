@@ -50,7 +50,7 @@ angular.module('hassdash').controller('DashboardCtrl',function($rootScope, $scop
             $timeout(function() {
                 $scope.dash.pages = $scope.pageBackup;
                 $scope.pageBackup = null;
-            }, 1);
+            }, 500);
         }
     }
 

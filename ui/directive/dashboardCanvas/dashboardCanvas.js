@@ -23,7 +23,7 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
                 isMobile: false,
                 mobileModeEnabled: false,
                 columns: Math.floor(scope.width / gridSize), // the width of the grid, in columns
-                pushing: false,
+                pushing: true,
                 floating: false,
                 swapping: true,
                 width: scope.width,
@@ -50,6 +50,14 @@ angular.module('hassdash').directive('dashboardCanvas', function($timeout, widge
                 }
             };
 
+
+            scope.overlayStyle = function(item) {
+                var itemHeight = item.size.y * gridSize;
+
+                return {
+                    "line-height": itemHeight + "px"
+                };
+            };
 
 
             scope.typeOfItem = function(item) {

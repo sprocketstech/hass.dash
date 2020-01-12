@@ -195,17 +195,19 @@ angular.module('hassdash').controller('EditWidgetCtrl', function ($scope, $uibMo
                 row: 0,
                 col: 0
             },
-            show_label: $ctrl.type.show_label
+            show_label: $ctrl.type.show_label,
+            entities: []
         };
         $ctrl.isNew = true;
     }
-
-    entityService.get($ctrl.type.entity_filter).then(function(results) {
-        $ctrl.entities = results;
-        if (!$ctrl.model.entity) {
-            $ctrl.model.entity = $ctrl.entities[0].entity_id;
-        }
-    });
+    if ($ctrl.type.num_entities !== 'none') {
+        entityService.get($ctrl.type.entity_filter).then(function(results) {
+            $ctrl.entities = results;
+            if ($ctrl.model.entities.length > 0 && $ctrl.type.num_entities !== 'none') {
+                $ctrl.model.entities.push($ctrl.entities[0].entity_id);
+            }
+        });
+    }
 
     $ctrl.ok = function () {
       $uibModalInstance.close($ctrl.model);

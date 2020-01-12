@@ -3,8 +3,10 @@
         <ul>
             <li gridster-item="customItemMap"
                 ng-repeat="item in items">
-                <div class="widget-content-wrapper" ng-mouseover="hoverIn(this.gridsterItem)" ng-mouseleave="hoverOut(this.gridsterItem)">
-                    <div class="widget-content-overlay">
+                <div class="widget-content-wrapper"
+                    ng-mouseover="hoverIn(this.gridsterItem)"
+                    ng-mouseleave="hoverOut(this.gridsterItem)">
+                    <div class="widget-content-overlay" ng-style="overlayStyle(item)">
                         <i class="drag-handle mdi mdi-arrow-all"></i>
                         <a class="button button-clear" ng-click="edit(item)"><i class="mdi mdi-pencil"></i></a>
                         <a class="button button-clear" ng-click="remove(item)"><i class="mdi mdi-delete"></i></a>

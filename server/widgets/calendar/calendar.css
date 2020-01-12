@@ -1,0 +1,15 @@
+.fc-scroller {
+    overflow: hidden !important;
+}
+.fc-day-header {
+    font-size: 18px;
+}
+.fc-day-grid {
+    font-size: 18px;
+}
+.fc-list-heading {
+    font-size: 18px;
+}
+.fc-list-item {
+    font-size: 18px;
+}

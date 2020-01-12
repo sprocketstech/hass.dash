@@ -1,7 +1,35 @@
-- name: Command Center
+- name: Command Center2
   device: Custom
   pages:
     - widgets:
+        - name: Weather Conditions
+          plugin_module: hassdash.widget.weather_conditions
+          plugin_name: Weather Conditions
+          size:
+            x: 8
+            y: 3
+          position:
+            row: 0
+            col: 0
+          show_label: false
+          entity: weather.home
+          icon_color: white
+          entities:
+            "0": weather.home
+        - name: Weather Forecast
+          plugin_module: hassdash.widget.weather_forecast
+          plugin_name: Weather Forecast
+          size:
+            x: 10
+            y: 4
+          position:
+            row: 0
+            col: 13
+          show_label: false
+          entity: weather.home
+          icon_color: white
+          entities:
+            "0": weather.home
         - name: Clock
           plugin_module: hassdash.widget.clock
           plugin_name: Clock
@@ -21,35 +49,11 @@
             x: 6
             y: 1
           position:
-            row: 2
+            row: 3
             col: 28
           show_label: false
           entity: sensor.date_time_iso
           date_format: dddd, MMMM Do YYYY
-        - name: Weather Conditions
-          plugin_module: hassdash.widget.weather_conditions
-          plugin_name: Weather Conditions
-          size:
-            x: 8
-            y: 3
-          position:
-            row: 1
-            col: 1
-          show_label: false
-          entity: weather.home
-          icon_color: white
-        - name: Weather Forecast
-          plugin_module: hassdash.widget.weather_forecast
-          plugin_name: Weather Forecast
-          size:
-            x: 10
-            y: 4
-          position:
-            row: 0
-            col: 13
-          show_label: false
-          entity: weather.home
-          icon_color: white
     - widgets:
         - name: Clock
           plugin_module: hassdash.widget.clock
@@ -71,8 +75,8 @@
   portrait: false
   device_width: 1680
   device_height: 1050
-  background: white
-  foreground: black
+  background: black
+  foreground: white
 - name: New Board
   device: Sprocket DX2
   pages:
@@ -139,3 +143,63 @@
   height: 240
   customizable: false
   portrait: true
+- name: Command Center
+  device: Custom
+  pages:
+    - widgets:
+        - name: Clock
+          plugin_module: hassdash.widget.clock
+          plugin_name: Clock
+          size:
+            x: 6
+            y: 2
+          position:
+            row: 8
+            col: 1
+          show_label: false
+          entities: []
+          time_format: h:mm A
+        - name: Date
+          plugin_module: hassdash.widget.date
+          plugin_name: Date
+          size:
+            x: 6
+            y: 1
+          position:
+            row: 7
+            col: 0
+          show_label: false
+          entities: []
+          date_format: dddd, MMMM Do YYYY
+        - name: Weather Conditions
+          plugin_module: hassdash.widget.weather_conditions
+          plugin_name: Weather Conditions
+          size:
+            x: 8
+            y: 3
+          position:
+            row: 2
+            col: 0
+          show_label: false
+          entities:
+            - weather.home
+        - name: Weather Forecast
+          plugin_module: hassdash.widget.weather_forecast
+          plugin_name: Weather Forecast
+          size:
+            x: 10
+            y: 4
+          position:
+            row: 0
+            col: 11
+          show_label: false
+          entities:
+            - weather.home
+    - widgets: []
+  foreground: white
+  width: 1680
+  height: 1050
+  device_width: 1680
+  device_height: 1050
+  customizable: true
+  background: black

@@ -4,11 +4,7 @@ angular.module('hassdash.widget.date', ['hassdash']);
 
 angular.module('hassdash.widget.date').controller('dateController', function($scope, $interval) {
     var currentTime = new moment();
-    if ($scope.value) {
-        currentTime = new moment($scope.value);
-    }
-
-
+    
     if (!$scope.config.date_format) {
         $scope.config.date_format = 'dddd, MMMM Do YYYY';
     }

@@ -1,11 +1,27 @@
 <div class="col-md-12" ng-controller="TestwidgetCtrl">
     <div class="row">
         <div class="col-md-6">
-            <textarea style="width: 100%" rows="13" ng-model="testItem"></textarea>
+            <div class="row">
+                <div class="col-md-12">
+                    <textarea style="width: 100%" rows="13" ng-model="testItem"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group mr-3">
+                        <label class="mr-3">Background: </label>
+                        <select class="form-control" ng-model="background" ng-default="'white'" style="width:100px;">
+                            <option value="white">White</option>
+                            <option value="black">Black</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-6 widget-test-preview">
-            <widget-content type="typeOfItem(item)" config="item" editable="true" foreground='foreground' background='background'>
+            <widget-content class="test-widget dashboard-bg-{{background}}" type="typeOfItem(item)" config="item" editable="true" foreground='foreground' background='background'>
             </widget-content>
         </div>
     </div>
+
 </div>

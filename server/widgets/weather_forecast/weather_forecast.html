@@ -15,7 +15,7 @@
                 H: {{day.temperature | number:0}}
             </div>
         </div>
-        <div class="row weather-forecast-temps">
+        <div class="row weather-forecast-temps" ng-if="day.templow">
             <div class="col-md-12">
                 L: {{day.templow | number:0}}
             </div>

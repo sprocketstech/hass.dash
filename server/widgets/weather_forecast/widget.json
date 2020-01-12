@@ -4,6 +4,7 @@
     "controller": "weatherForecastController",
     "editController": "weatherForecastEditController",
     "show_label": false,
+    "num_entities": "one",
     "entity_filter": [
         "weather.*"
     ],

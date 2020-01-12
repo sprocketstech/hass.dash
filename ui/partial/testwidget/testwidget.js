@@ -13,6 +13,11 @@ angular.module('hassdash').controller('TestwidgetCtrl',function($scope, $window,
         }
     });
 
+
+    $scope.$watch("background", function(ni, oi) {
+        $scope.foreground = $scope.background === 'white' ? 'black' : 'white';
+    });
+
     $scope.typeOfItem = function(item) {
         return widgetService.get(item.plugin_module, item.plugin_name);
     };

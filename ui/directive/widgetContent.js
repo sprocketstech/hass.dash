@@ -1,4 +1,4 @@
-angular.module('hassdash').directive('widgetContent', function($log, widgetService, entityService, $compile, $controller, gridSize) {
+angular.module('hassdash').directive('widgetContent', function($log, _, widgetService, entityService, $compile, $controller, gridSize) {
 
 
     var errorTemplate = '<div class="alert alert-danger">##</div>';
@@ -15,20 +15,39 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
         element.html(errorTemplate.replace(/##/g, msg));
     }
 
-    function monitorEntity(widgetScope) {
-        if (!widgetScope.value) {
+    function monitorEntities(widgetScope) {
+
+        if (widgetScope.config.entities && widgetScope.config.entities.length > 0) {
             entityService.onStateChange(widgetScope, function(event) {
-                if (event.entity_id === widgetScope.config.entity) {
-                    //this update matches the entity we are watching, push it
+                if (_.includes(widgetScope.config.entities, event.entity_id)) {
+                    //this update matches and entity we are watching, push it
                     //to the widget
-                    widgetScope.value = event;
+                    widgetScope.values[event.entity_id] = event;
                 }
             });
-            //set the initial value
-            entityService.getEntity(widgetScope.config.entity).then(function (val) {
-                widgetScope.value = val;
-            });
+            //set the initial values
+            widgetScope.values = {};
+            for (var i=0; i < widgetScope.config.entities.length; ++i) {
+                (function(index) {
+                    entityService.getEntity(widgetScope.config.entities[index]).then(function (val) {
+                        widgetScope.values[widgetScope.config.entities[index]]= val;
+                   });
+                })(i);
+            }
         }
+    }
+
+    function monitorEntity(widgetScope) {
+        entityService.onStateChange(widgetScope, function(event) {
+            if (event.entity_id === widgetScope.config.entities[0]) {
+                //this update matches the entity we are watching, push it
+                widgetScope.value = event;
+            }
+        });
+        //set the initial value
+        entityService.getEntity(widgetScope.config.entities[0]).then(function (val) {
+            widgetScope.value = val;
+        });
     }
 
     function compileWidget(scope, element, content, controller, currentScope) {
@@ -49,7 +68,18 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
         var widgetScope  = scope.$new();
         //provide the config and value to the scope
         widgetScope.config = scope.config;
-        widgetScope.value = scope.value;
+
+        //start the value updater
+        if (scope.editable === false || scope.editable === "false") {
+            if (scope.type.num_entities === 'one') {
+                widgetScope.value = scope.value;
+                monitorEntity(widgetScope);
+            } else if (scope.type.num_entities === 'many') {
+                monitorEntities(widgetScope);
+            }
+
+        }
+
         widgetScope.foregroundColor = scope.foreground;
         widgetScope.backgroundColor = scope.background;
         //create the controller
@@ -66,11 +96,6 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
             currentScope.$destroy();
         }
         currentScope = widgetScope;
-
-        //start the value updater
-        if (!scope.editable) {
-            monitorEntity(widgetScope);
-        }
 
         return currentScope;
     }
@@ -92,7 +117,7 @@ angular.module('hassdash').directive('widgetContent', function($log, widgetServi
                 toLoad.push({type: "js", url: scope.type.templateJs[j]});
             }
         }
-        var controller = scope.editable ? scope.type.editController : scope.type.controller;
+        var controller = scope.editable === true || scope.editable === "true" ? scope.type.editController : scope.type.controller;
         if (!controller) {
             controller = scope.type.controller;
         }

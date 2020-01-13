@@ -19,6 +19,13 @@ hass_svc.init = function(logger, url, llat) {
     hass_svc._load();
 }
 
+hass_svc.getCalendar = function(id, start, end) {
+    hass_svc.logger.info("Retrieving calendar " + id);
+    var fullUrl = hass_svc.url + '/calendars/' + id + '?start=' + start + '&end=' + end;
+    hass_svc.logger.info("Calendar Url" + fullUrl);
+    return axios.get(fullUrl);
+}
+
 hass_svc.states = function() {
     var ret = [];
     for (var i in hass_svc.states) {
@@ -36,7 +43,7 @@ hass_svc._logError = function(error) {
     if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        hass_svc.logger.error("Error accessing " + error.config && error.config.url ? error.config.url : hass_svc.url + ": (" + error.response.status + ") " + error.response.statusText);
+        hass_svc.logger.error("Error accessing " + (error.config && error.config.url ? error.config.url : hass_svc.url) + ": (" + error.response.status + ") " + error.response.statusText);
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -44,7 +51,7 @@ hass_svc._logError = function(error) {
         hass_svc.logger.error("No response while accessing " + error.config && error.config.url ? error.config.url : hass_svc.url);
     } else {
         // Something happened in setting up the request that triggered an Error
-        hass_svc.logger.error("Error accessing " + error.config && error.config.url ? error.config.url : hass_svc.url + ": " + error.message);
+        hass_svc.logger.error("Error accessing " + (error.config && error.config.url ? error.config.url : hass_svc.url) + ": " + error.message);
     }
 }
 
@@ -144,7 +151,7 @@ hass_svc._subscribeToStates = function() {
                 }
                 hass_svc._publishStateChange(hass_svc.states[eid]);
             } else {
-                //console.log("Unknown event type: " + dt.event_type);
+                console.log("Unknown event type: " + dt.event_type);
             }
         } catch (e) {
             //TODO: Log console.log(e);

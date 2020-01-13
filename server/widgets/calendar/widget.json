@@ -10,24 +10,12 @@
         "calendar.*"
     ],
     "availableSizes": [
-        {"name": "XS", "value": {"x": 5, "y": 2}},
-        {"name": "S", "value": {"x": 6, "y": 2}},
-        {"name": "M", "value": {"x": 10, "y": 2}},
-        {"name": "L", "value": {"x": 5, "y": 4}},
-        {"name": "XL", "value": {"x": 6, "y": 4}},
+        {"name": "M", "value": {"x": 5, "y": 6}},
+        {"name": "L", "value": {"x": 10, "y": 10}},
+        {"name": "XL", "value": {"x": 15, "y": 15}},
         {"name": "XXL", "value": {"x": 25, "y": 15}}
     ],
     "options": [
-        {
-            "name": "View",
-            "key": "view",
-            "type": "select",
-            "values": [
-                    {"display": "Month", "value": "month"},
-                    {"display": "Agenda", "value": "listMonth"}
-
-            ]
-        }
     ],
     "templateUrl": "calendar/calendar.html",
     "templateCss": ["calendar/fullcalendar.min.css",

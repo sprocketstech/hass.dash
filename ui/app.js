@@ -1,7 +1,7 @@
 /* global io */
 /* global _baseUrl */
 /* global _basePath */
-angular.module('hassdash', ['ui.bootstrap','ui.router','ngAnimate', 'ngTouch', 'oc.lazyLoad', 'ngFitText', 'gridster', 'btford.socket-io']);
+angular.module('hassdash', ['ui.bootstrap','ui.router','ngAnimate', 'ngTouch', 'oc.lazyLoad', 'ngFitText', 'gridster', 'btford.socket-io', 'color.picker']);
 
 angular.module('hassdash').config(function($stateProvider, $urlRouterProvider) {
 
@@ -42,14 +42,9 @@ angular.module('hassdash').run(function($rootScope, widgetService, entityService
 
 });
 angular.module('hassdash').factory('clientUpdates', function (baseURL, socketFactory) {
-    /*var socket = socketFactory({
-        ioSocket: io(baseURL)
-      });
-    return socket;*/
     return function() {
         return socketFactory();
-    }
-
+    };
 });
 
 angular.module('hassdash').factory('baseURL', function() {

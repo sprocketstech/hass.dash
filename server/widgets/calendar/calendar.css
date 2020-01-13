@@ -13,3 +13,72 @@
 .fc-list-item {
     font-size: 18px;
 }
+
+.calendar-widget-x-5 .fc-toolbar h2 {
+    font-size: 14px !important;
+}
+.calendar-widget-x-5 .fc-scroller {
+    overflow: hidden auto !important;
+}
+.calendar-widget-x-5 .fc-day-header {
+    font-size: 12px !important;
+}
+.calendar-widget-x-5 .fc-day-grid {
+    font-size: 12px !important;
+}
+.calendar-widget-x-5 .fc-list-heading {
+    font-size: 12px !important;
+}
+.calendar-widget-x-5 .fc-list-item {
+    font-size: 12px !important;
+}
+
+.calendar-widget-x-5 .mdi {
+    display: none;
+    visibility: collapse;
+}
+.calendar-widget-x-5 .fc-list-item-marker  {
+    display: none;
+    visibility: collapse;
+}
+
+.calendar-widget-x-10 .fc-toolbar h2 {
+    font-size: 16px !important;
+}
+
+.calendar-widget-x-10 .fc-scroller {
+    overflow: hidden auto !important;
+}
+.calendar-widget-x-10 .fc-day-header {
+    font-size: 14px !important;
+}
+.calendar-widget-x-10 .fc-day-grid {
+    font-size: 14px !important;
+}
+.calendar-widget-x-10 .fc-list-heading {
+    font-size: 14px !important;
+}
+.calendar-widget-x-10 .fc-list-item {
+    font-size: 14px !important;
+}
+
+
+.calendar-widget-x-15 .fc-toolbar h2 {
+    font-size: 18px !important;
+}
+
+.calendar-widget-x-15 .fc-scroller {
+    overflow: hidden auto !important;
+}
+.calendar-widget-x-15 .fc-day-header {
+    font-size: 16px !important;
+}
+.calendar-widget-x-15 .fc-day-grid {
+    font-size: 16px !important;
+}
+.calendar-widget-x-15 .fc-list-heading {
+    font-size: 16px !important;
+}
+.calendar-widget-x-15 .fc-list-item {
+    font-size: 16px !important;
+}

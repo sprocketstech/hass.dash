@@ -1,0 +1,11 @@
+<button class="btn btn-default mdi mdi-16px" type="button" ng-class="[selected]" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-mouseup="focusInput()"></button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="padding:6px">
+    <span class="mdi mdi-24px mdi-magnify search"></span>
+    <input type="text" class="form-control" placeholder="Filter..." ng-model="searchTerm" ng-model-options="{ debounce: 200 }" />
+    <div ng-show="icons.length == 0" class="" style="padding: 10px 4px 4px 4px;">No icons found</div>
+      <div class="icons">
+      <span ng-repeat="icon in icons" class="mdi mdi-24px" ng-class="['mdi-' + icon]" ng-attr-title="{{icon}}" ng-click="selectIcon(icon)"></span>
+      <div ng-show="icons.length == 301" class="" style="padding: 10px 4px 4px 4px;">Please filter to view others...</div>
+    </div>
+  </div>
+</div>

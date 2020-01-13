@@ -5,12 +5,16 @@
 
 @import "bower_components/angular-gridster/src/angular-gridster.less";
 
+@import (css) "bower_components/angularjs-color-picker/dist/angularjs-color-picker.min.css";
+@import (css) "bower_components/angularjs-color-picker/dist/themes/angularjs-color-picker-bootstrap.min.css";
+
 /* Component LESS */
 @import "partial/editor/editor.less";
 @import "partial/dashboard/dashboard.less";
 @import "partial/testwidget/testwidget.less";
 @import "directive/dashboardCanvas/dashboardCanvas.less";
 @import "directive/dashboardViewer/dashboardViewer.less";
+@import "directive/mdiIconPicker/mdiIconPicker.less";
 /* Add Component LESS Above */
 
 body.dashboard-bg-black {
@@ -43,7 +47,7 @@ body.dashboard-bg-black {
 .custom-switch {
     margin-top: 1.5rem;
 }
-
+/*
 .btn .mdi::before {
     position: relative;
     top: 4px;
@@ -56,6 +60,7 @@ body.dashboard-bg-black {
     font-size: 18px;
     top: 3px;
 }
+
 .dropdown-menu .mdi {
     width: 18px;
 }
@@ -102,7 +107,7 @@ body.dashboard-bg-black {
     top: 3px;
     left: -3px
 }
-
+*/
 /* Personal preference for BS modal.  The LESS below makes the backdrop white and
    causes the modal to fade in rather than slide in. */
 //@modal-backdrop-bg: white;
@@ -133,4 +138,9 @@ body.dashboard-bg-black {
 .dashboard-bg-black .table {
     background: black !important;
     color: white !important;
+}
+
+.modal-dialog.modal-xl {
+    width: 98%;
+    max-width: 98%;
 }

@@ -84,7 +84,7 @@
         </div>
         <div class="modal-body" id="modal-body">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <form>
                         <div class="form-group row">
                             <label class="col-sm-1 col-form-label">Label: </label>
@@ -104,6 +104,19 @@
                                 <select class="form-control" ng-model="$ctrl.model.entities[0]" ng-options="entity.entity_id as entity.friendly_name for entity in $ctrl.entities"></select>
                             </div>
                         </div>
+                        <div class="form-group row" ng-show="$ctrl.type.num_entities === 'many'">
+                            <label class="col-sm-2 col-form-label">Entities: </label>
+                            <div class="col-sm-10 entity_list_selection">
+                                <div class="custom-control custom-checkbox" ng-repeat="entity in $ctrl.entities">
+                                    <input type="checkbox" class="custom-control-input"
+                                            value="{{entity.entity_id}}"
+                                            id="entity_select_{{$index}}"
+                                            ng-checked="$ctrl.model.entities.indexOf(entity.entity_id) > -1"
+                                            ng-click="$ctrl.toggleEntitySelection(entity.entity_id)">
+                                    <label class="custom-control-label" for="entity_select_{{$index}}">{{entity.friendly_name}}</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Size: </label>
                             <div class="col-sm-6">
@@ -117,7 +130,7 @@
                         </div>
 
                         <!-- Start custom settings for widget-->
-                        <div class="form-group row" ng-repeat="option in $ctrl.type.options">
+                        <div class="form-group row" ng-repeat="option in $ctrl.type.options" ng-if="!$ctrl.type.configUrl">
                             <label class="col-sm-2 col-form-label"><span ng-if="option.type != 'boolean'">{{option.name}}:</span></label>
                             <div class="col-sm-10">
                                 <select class="form-control" ng-if="option.type == 'select'"
@@ -130,11 +143,14 @@
                                 </label>
                             </div>
                         </div>
+                        <!-- Start custom settings for widget (custom config)-->
+                        <custom-widget-config type="$ctrl.type" config="$ctrl.model"  ng-if="$ctrl.type.configUrl">
+                        </custom-widget-config>
                     </form>
                 </div>
                 <!-- Preview -->
-                <div class="col-lg-6">
-                    <widget-content type="$ctrl.type" config="$ctrl.model" class="editing_widget border-primary" editable="false"  foreground='foreground' background='background'>
+                <div class="col-lg-8">
+                    <widget-content type="$ctrl.type" config="$ctrl.model" class="editing_widget border-primary" editable="true"  foreground='foreground' background='background'>
                     </widget-content>
                 </div>
             </div>

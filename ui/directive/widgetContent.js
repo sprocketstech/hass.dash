@@ -28,11 +28,11 @@ angular.module('hassdash').directive('widgetContent', function($log, _, widgetSe
             //set the initial values
             widgetScope.values = {};
             for (var i=0; i < widgetScope.config.entities.length; ++i) {
-                (function(index) {
-                    entityService.getEntity(widgetScope.config.entities[index]).then(function (val) {
-                        widgetScope.values[widgetScope.config.entities[index]]= val;
+                (function(index, e, w) {
+                    e.getEntity(w.config.entities[index]).then(function (val) {
+                        w.values[w.config.entities[index]]= val;
                    });
-                })(i);
+                })(i, entityService, widgetScope);
             }
         }
     }

@@ -49,11 +49,46 @@
             x: 6
             y: 1
           position:
-            row: 3
-            col: 28
+            row: 2
+            col: 29
           show_label: false
           entity: sensor.date_time_iso
           date_format: dddd, MMMM Do YYYY
+        - name: Calendar
+          plugin_module: hassdash.widget.calendar
+          plugin_name: Calendar
+          size:
+            x: 25
+            y: 15
+          position:
+            row: 5
+            col: 5
+          show_label: false
+          entities:
+            - calendar.jon_maucher_gmail_com
+            - calendar.maucher_family
+            - calendar.bdays
+            - calendar.bdays
+            - calendar.bdays
+            - calendar.bdays
+            - calendar.bdays
+            - calendar.bdays
+            - calendar.bdays
+            - calendar.bdays
+          view: month
+          styles:
+            calendar.jon_maucher_gmail_com:
+              background: rgba(33, 150, 243, 0.58)
+              icon: calendar-text
+              display: jon.maucher@gmail.com
+            calendar.maucher_family:
+              background: rgba(20, 91, 148, 0.77)
+              icon: calendar-check
+              display: Maucher Family
+            calendar.bdays:
+              background: "#2196F3"
+              icon: calendar-blank
+              display: BDays
     - widgets:
         - name: Clock
           plugin_module: hassdash.widget.clock

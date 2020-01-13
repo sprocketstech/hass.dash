@@ -198,6 +198,11 @@ angular.module('hassdash').controller('EditWidgetCtrl', function ($scope, $uibMo
             show_label: $ctrl.type.show_label,
             entities: []
         };
+        for (var i=0; i < $ctrl.type.options.length; ++i) {
+            if ($ctrl.type.options[i].type === 'select') {
+                $ctrl.model[$ctrl.type.options[i].key] = $ctrl.type.options[i].values[0].value;
+            }
+        }
         $ctrl.isNew = true;
     }
     if ($ctrl.type.num_entities !== 'none') {
@@ -216,6 +221,19 @@ angular.module('hassdash').controller('EditWidgetCtrl', function ($scope, $uibMo
     $ctrl.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    $ctrl.toggleEntitySelection = function(id) {
+        var idx = $ctrl.model.entities.indexOf(id);
+        // Is currently selected
+        if (idx > -1) {
+            $ctrl.model.entities.splice(idx, 1);
+        }
+        // Is newly selected
+        else {
+            $ctrl.model.entities.push(id);
+        }
+    };
+
 
     $scope.$watch(function() {
         return $ctrl.model;
